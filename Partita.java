@@ -6,14 +6,14 @@
 //
 
 public class Partita {
+    private Giocatore giocatore;
+    private Giocatore computer;
     private int dimensioneGriglia;
-    private Nave[] navi;
-    private PosizioneColpo[] posizioniColpite;
     private int numeroTurni;
 
-    public Partita(int dimensioneGriglia, int numeroNavi) {
-        this.dimensioneGriglia = dimensioneGriglia;
-        this.posizioniColpite = new PosizioneColpo[dimensioneGriglia * dimensioneGriglia];
+    public Partita(Griglia grigliaGiocatore, Griglia grigliaComputer) {
+        this.grigliaGiocatore = grigliaGiocatore;
+        this.grigliaComputer = grigliaComputer;
         this.numeroTurni = 0;
     }
 }
