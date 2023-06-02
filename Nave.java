@@ -8,21 +8,12 @@
 public class Nave {
     private final String tipo;
     private final int dimensione;
-    private Posizione posizione;
+    private Posizione posizioneIniziale;
     private Direzione direzione;
 
     public Nave(String tipo, int dimensione) {
         this.tipo = tipo;
         this.dimensione = dimensione;
-        this.posizione = null;
-        this.direzione = null;
-    }
-
-    public Nave(String tipo, int dimensione, Posizione posizione, Direzione direzione) {
-        this.tipo = tipo;
-        this.dimensione = dimensione;
-        this.posizione = posizione;
-        this.direzione = direzione;
     }
 
     public String getTipo() {
@@ -33,12 +24,12 @@ public class Nave {
         return dimensione;
     }
 
-    public Posizione getPosizione() {
-        return posizione;
+    public Posizione getPosizioneIniziale() {
+        return posizioneIniziale;
     }
 
-    public void setPosizione(Posizione posizione) {
-        this.posizione = posizione;
+    public void setPosizioneIniziale(Posizione posizioneIniziale) {
+        this.posizioneIniziale = posizioneIniziale;
     }
 
     public Direzione getDirezione() {
@@ -47,17 +38,5 @@ public class Nave {
 
     public void setDirezione(Direzione direzione) {
         this.direzione = direzione;
-    }
-
-    public String grafica() {
-        StringBuilder grafica = new StringBuilder();
-        for (int i = 0; i < dimensione; i++) {
-            grafica.append(Griglia.NAVE);
-        }
-        return grafica.toString();
-    }
-
-    public String toString() {
-        return tipo + " (" + dimensione + ")";
     }
 }

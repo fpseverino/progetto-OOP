@@ -5,8 +5,16 @@
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 31/05/23.
 //
 
+import java.util.Scanner;
+
 public class Main {
     static public void main(String[] args) {
-        System.out.println("Hello, World!");
+        Scanner scanner = new Scanner(System.in);
+        Partita partita = new Partita(10, 5);
+        partita.initNavi(scanner);
+        Griglia griglia = partita.getGiocatore().getGriglia();
+        griglia.stampa();
+        griglia.posizionaNavi(partita.getNavi(), scanner);
+        scanner.close();
     }
 }

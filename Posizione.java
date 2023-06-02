@@ -32,27 +32,4 @@ public class Posizione {
     public int getRiga() {
         return riga;
     }
-
-    public static int decodifica(char colonna) throws IllegalArgumentException {
-        if (colonna < 'A') {
-            throw new IllegalArgumentException("Posizione non valida");
-        }
-        return colonna - 'A';
-    }
-
-    public static char codifica(int colonna) throws IllegalArgumentException {
-        if (colonna < 0) {
-            throw new IllegalArgumentException("Posizione non valida");
-        }
-        return (char) (colonna + 'A');
-    }
-
-    public String toString() {
-        return codifica(colonna) + "" + (riga + 1);
-    }
-
-    // TODO: implementare
-    public static boolean dentroGriglia() {
-        return true;
-    }
 }

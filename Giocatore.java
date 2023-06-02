@@ -6,8 +6,15 @@
 //
 
 public class Giocatore {
-    private String nome;
     private Griglia griglia;
-    private Posizione[] colpi;
     private boolean computer;
+
+    public Giocatore(int dimensione, boolean computer) {
+        this.griglia = new Griglia(dimensione);
+        this.computer = computer;
+    }
+
+    public Griglia getGriglia() {
+        return griglia;
+    }
 }
