@@ -55,7 +55,7 @@ public class Griglia {
             Nave naveDaPosizionare = new Nave(nave.getTipo(), nave.getDimensione());
             naveDaPosizionare.setPosizioneIniziale(posizioneNave);
             naveDaPosizionare.setDirezione(direzione);
-            while (!dentro(naveDaPosizionare)) {
+            while (!posizioneValida(naveDaPosizionare)) {
                 System.out.println("La nave non può essere posizionata in questa posizione");
                 System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (" + nave.getDimensione() + "): ");
                 posizione = scanner.nextLine();
@@ -78,13 +78,29 @@ public class Griglia {
         }
     }
 
-    public boolean dentro(Nave nave) {
+    public boolean posizioneValida(Nave nave) {
         Posizione posizioneIniziale = nave.getPosizioneIniziale();
         Direzione direzione = nave.getDirezione();
         int dimensione = nave.getDimensione();
         if (direzione == Direzione.ORIZZONTALE) {
+            for (int i = 0; i < dimensione; i++) {
+                if (i + posizioneIniziale.getColonna() >= dimensioneGriglia) {
+                    return false;
+                }
+                if (griglia[posizioneIniziale.getRiga()][posizioneIniziale.getColonna() + i] == NAVE) {
+                    return false;
+                }
+            }
             return posizioneIniziale.getColonna() + dimensione <= dimensioneGriglia;
         } else {
+            for (int i = 0; i < dimensione; i++) {
+                if (i + posizioneIniziale.getRiga() >= dimensioneGriglia) {
+                    return false;
+                }
+                if (griglia[posizioneIniziale.getRiga() + i][posizioneIniziale.getColonna()] == NAVE) {
+                    return false;
+                }
+            }
             return posizioneIniziale.getRiga() + dimensione <= dimensioneGriglia;
         }
     }
