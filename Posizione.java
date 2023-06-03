@@ -8,14 +8,13 @@
 public class Posizione {
     private final int colonna;
     private final int riga;
+    private String tipoNave;
 
     public enum Occupazione {
         ACQUA,
         NAVE,
-        MANCATO,
-        COLPITO;
-
-        private String tipoNave;
+        MANCATA,
+        COLPITA;
     }
 
     private Occupazione occupazione;
@@ -26,6 +25,7 @@ public class Posizione {
         this.colonna = colonna;
         this.riga = riga;
         this.occupazione = Occupazione.ACQUA;
+        this.tipoNave = null;
     }
 
     public Posizione(char colonna, int riga) throws IllegalArgumentException {
@@ -48,15 +48,11 @@ public class Posizione {
         this.occupazione = occupazione;
     }
 
-    public String getTipoNave() throws IllegalStateException {
-        if (this.occupazione == Occupazione.ACQUA || this.occupazione == Occupazione.MANCATO)
-            throw new IllegalStateException("Posizione non occupata da una nave");
-        return occupazione.tipoNave;
+    public String getTipoNave() {
+        return tipoNave;
     }
 
-    public void setTipoNave(String tipoNave) throws IllegalStateException {
-        if (this.occupazione == Occupazione.ACQUA || this.occupazione == Occupazione.MANCATO)
-            throw new IllegalStateException("Posizione non occupata da una nave");
-        this.occupazione.tipoNave = tipoNave;
+    public void setTipoNave(String tipoNave) {
+        this.tipoNave = tipoNave;
     }
 }

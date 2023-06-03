@@ -27,7 +27,7 @@ public class Nave {
         return affondata;
     }
 
-    public void setAffondata(boolean affondata) {
-        this.affondata = affondata;
+    public void affonda() {
+        this.affondata = true;
     }
 }

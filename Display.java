@@ -27,9 +27,9 @@ public final class Display {
 
     public static final char ACQUA_CHAR = '~';
     // public static final char NAVE_CHAR = '☐';
-    // public static final char COLPITO_CHAR = '☒';
-    // public static final char MANCATO_CHAR = '☸';
+    // public static final char COLPITA_CHAR = '☒';
+    // public static final char MANCATA_CHAR = '☸';
     public static final char NAVE_CHAR = 'O';
-    public static final char COLPITO_CHAR = '0';
-    public static final char MANCATO_CHAR = 'X';
+    public static final char COLPITA_CHAR = '0';
+    public static final char MANCATA_CHAR = 'X';
 }

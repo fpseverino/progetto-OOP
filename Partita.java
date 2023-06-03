@@ -16,23 +16,46 @@ public class Partita {
     private Griglia grigliaNaviGiocatore;
     private Griglia grigliaNaviComputer;
     private Griglia grigliaColpiGiocatore;
-    private Griglia grigliaColpiComputer;
     private int numeroTurni = 0;
 
-    public Partita(int dimensioneGriglia, int numeroNavi) throws IllegalArgumentException {
-        if (dimensioneGriglia < 5 || dimensioneGriglia > 26) {
+    public Partita(int dimensioneGriglia, int numeroNavi, Scanner scanner) throws IllegalArgumentException {
+        if (dimensioneGriglia < 5 || dimensioneGriglia > 26)
             throw new IllegalArgumentException("La dimensione della griglia deve essere compresa tra 5 e 26");
-        }
-        if (numeroNavi < 1 || numeroNavi > dimensioneGriglia) {
+        if (numeroNavi < 1 || numeroNavi > dimensioneGriglia)
             throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
-        }
         this.dimensioneGriglia = dimensioneGriglia;
         this.numeroNavi = numeroNavi;
         this.navi = new Nave[numeroNavi];
-        this.grigliaNaviGiocatore = new Griglia(dimensioneGriglia);
-        this.grigliaNaviComputer = new Griglia(dimensioneGriglia);
-        this.grigliaColpiGiocatore = new Griglia(dimensioneGriglia);
-        this.grigliaColpiComputer = new Griglia(dimensioneGriglia);
+        initNavi(scanner);
+        this.naviGiocatore = new Nave[numeroNavi];
+        this.naviComputer = new Nave[numeroNavi];
+        for (int i = 0; i < numeroNavi; i++)
+            naviGiocatore[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
+        for (int i = 0; i < numeroNavi; i++)
+            naviComputer[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
+        this.grigliaNaviGiocatore = new Griglia(dimensioneGriglia, naviGiocatore);
+        this.grigliaNaviComputer = new Griglia(dimensioneGriglia, naviComputer);
+        this.grigliaColpiGiocatore = new Griglia(dimensioneGriglia, null);
+    }
+
+    public Nave[] getNavi() {
+        return navi;
+    }
+
+    public Griglia getGrigliaNaviGiocatore() {
+        return grigliaNaviGiocatore;
+    }
+
+    public Griglia getGrigliaNaviComputer() {
+        return grigliaNaviComputer;
+    }
+
+    public Griglia getGrigliaColpiGiocatore() {
+        return grigliaColpiGiocatore;
+    }
+
+    public int getNumeroTurni() {
+        return numeroTurni;
     }
 
     public void initNavi(Scanner scanner) {
@@ -68,24 +91,5 @@ public class Partita {
             scanner.nextLine();
             navi[i] = new Nave(tipo, dimensione);
         }
-
-        naviGiocatore = new Nave[numeroNavi];
-        naviComputer = new Nave[numeroNavi];
-        for (int i = 0; i < numeroNavi; i++) {
-            naviGiocatore[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
-            naviComputer[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
-        }
-    }
-
-    public Nave[] getNavi() {
-        return navi;
-    }
-
-    public Griglia getGrigliaNaviGiocatore() {
-        return grigliaNaviGiocatore;
-    }
-
-    public Griglia getGrigliaNaviComputer() {
-        return grigliaNaviComputer;
     }
 }

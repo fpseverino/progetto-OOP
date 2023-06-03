@@ -11,16 +11,69 @@ public class Main {
     static public void main(String[] args) {
         printTitolo();
         System.out.println();
+
         Scanner scanner = new Scanner(System.in);
-        Partita partita = new Partita(10, 3);
-        partita.initNavi(scanner);
-        Griglia grigliaGiocatore = partita.getGrigliaNaviGiocatore();
-        Griglia grigliaComputer = partita.getGrigliaNaviComputer();
-        grigliaGiocatore.posizionaNavi(partita.getNavi(), scanner);
-        grigliaComputer.posizionaNaviComputer(partita.getNavi());
-        grigliaGiocatore.print();
-        printGriglie(grigliaGiocatore, grigliaComputer);
+        System.out.print("Inserisci la dimensione della griglia: ");
+        int dimensioneGriglia = scanner.nextInt();
+        System.out.print("Inserisci il numero di navi: ");
+        int numeroNavi = scanner.nextInt();
+        scanner.nextLine();
+
+        Partita partita = new Partita(dimensioneGriglia, numeroNavi, scanner);
+
+        Griglia grigliaNaviGiocatore = partita.getGrigliaNaviGiocatore();
+        grigliaNaviGiocatore.posizionaNavi(partita.getNavi(), scanner);
+
+        Griglia grigliaNaviComputer = partita.getGrigliaNaviComputer();
+        grigliaNaviComputer.posizionaNavi(partita.getNavi());
+
+        Griglia grigliaColpiGiocatore = partita.getGrigliaColpiGiocatore();
+
+        System.out.println();
+        printGriglie(grigliaNaviGiocatore, grigliaColpiGiocatore);
+        System.out.println();
+        System.out.println("Navi giocatore:");
+        grigliaNaviGiocatore.printRecapNavi();
+        System.out.println();
+        System.out.println("Navi computer:");
+        grigliaNaviComputer.printRecapNavi();
+        System.out.println();
+
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+
+        while (!grigliaNaviComputer.naviTutteAffondate() && !grigliaNaviGiocatore.naviTutteAffondate()) {
+            System.out.print("Inserisci la posizione da colpire: ");
+            String input = scanner.nextLine();
+            if (input.equals("exit"))
+                break;
+            char c = input.charAt(0);
+            int num = Integer.parseInt(input.substring(1));
+            Posizione posizione = new Posizione(c, num);
+            grigliaNaviComputer.sparaColpo(posizione);
+
+            grigliaColpiGiocatore.checkColpo(posizione, grigliaNaviComputer);
+
+            grigliaNaviGiocatore.sparaColpo();
+
+            grigliaNaviGiocatore.checkAffondate();
+            grigliaNaviComputer.checkAffondate();
+
+            System.out.println();
+            printGriglie(grigliaNaviGiocatore, grigliaColpiGiocatore);
+            System.out.println();
+
+            System.out.println("Navi giocatore:");
+            grigliaNaviGiocatore.printRecapNavi();
+            System.out.println();
+
+            System.out.println("Navi computer:");
+            grigliaNaviComputer.printRecapNavi();
+            System.out.println();
+        }
         scanner.close();
+        System.out.println("Grazie per aver giocato!");
     }
 
     public static void printTitolo(){
@@ -53,11 +106,11 @@ public class Main {
                     case ACQUA:
                         System.out.print(Display.ANSI_BLUE + Display.ACQUA_CHAR + Display.ANSI_RESET + " ");
                         break;
-                    case COLPITO:
-                        System.out.print(Display.ANSI_RED + Display.COLPITO_CHAR + Display.ANSI_RESET + " ");
+                    case COLPITA:
+                        System.out.print(Display.ANSI_RED + Display.COLPITA_CHAR + Display.ANSI_RESET + " ");
                         break;
-                    case MANCATO:
-                        System.out.print(Display.ANSI_WHITE + Display.MANCATO_CHAR + Display.ANSI_RESET + " ");
+                    case MANCATA:
+                        System.out.print(Display.ANSI_WHITE + Display.MANCATA_CHAR + Display.ANSI_RESET + " ");
                         break;
                     default:
                         System.out.print("? ");
@@ -72,11 +125,11 @@ public class Main {
                     case ACQUA:
                         System.out.print(Display.ANSI_BLUE + Display.ACQUA_CHAR + Display.ANSI_RESET + " ");
                         break;
-                    case COLPITO:
-                        System.out.print(Display.ANSI_RED + Display.COLPITO_CHAR + Display.ANSI_RESET + " ");
+                    case COLPITA:
+                        System.out.print(Display.ANSI_RED + Display.COLPITA_CHAR + Display.ANSI_RESET + " ");
                         break;
-                    case MANCATO:
-                        System.out.print(Display.ANSI_WHITE + Display.MANCATO_CHAR + Display.ANSI_RESET + " ");
+                    case MANCATA:
+                        System.out.print(Display.ANSI_WHITE + Display.MANCATA_CHAR + Display.ANSI_RESET + " ");
                         break;
                     default:
                         System.out.print("? ");
