@@ -12,7 +12,7 @@ public class Main {
         printTitolo();
         System.out.println();
         Scanner scanner = new Scanner(System.in);
-        Partita partita = new Partita(5, 3);
+        Partita partita = new Partita(10, 3);
         partita.initNavi(scanner);
         Griglia grigliaGiocatore = partita.getGrigliaNaviGiocatore();
         Griglia grigliaComputer = partita.getGrigliaNaviComputer();
@@ -38,7 +38,7 @@ public class Main {
         System.out.print("   ");
         for (int i = 0; i < grigliaGiocatore.getDimensione(); i++)
             System.out.print((char) ('A' + i) + " ");
-        System.out.print("   ");
+        System.out.print("    ");
         for (int i = 0; i < grigliaComputer.getDimensione(); i++)
             System.out.print((char) ('A' + i) + " ");
         System.out.println();
