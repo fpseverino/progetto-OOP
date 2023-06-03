@@ -1,11 +1,11 @@
 //
-//  Colore.java
+//  Display.java
 //  progetto-OOP
 //
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 03/06/23.
 //
 
-public final class Colore {
+public final class Display {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -25,4 +25,11 @@ public final class Colore {
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
+    public static final char ACQUA_CHAR = '~';
+    // public static final char NAVE_CHAR = '☐';
+    // public static final char COLPITO_CHAR = '☒';
+    // public static final char MANCATO_CHAR = '☸';
+    public static final char NAVE_CHAR = 'O';
+    public static final char COLPITO_CHAR = '0';
+    public static final char MANCATO_CHAR = 'X';
 }

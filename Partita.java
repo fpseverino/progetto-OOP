@@ -11,6 +11,8 @@ public class Partita {
     private final int dimensioneGriglia;
     private final int numeroNavi;
     private Nave[] navi;
+    private Nave[] naviGiocatore;
+    private Nave[] naviComputer;
     private Griglia grigliaNaviGiocatore;
     private Griglia grigliaNaviComputer;
     private Griglia grigliaColpiGiocatore;
@@ -65,6 +67,13 @@ public class Partita {
             }
             scanner.nextLine();
             navi[i] = new Nave(tipo, dimensione);
+        }
+
+        naviGiocatore = new Nave[numeroNavi];
+        naviComputer = new Nave[numeroNavi];
+        for (int i = 0; i < numeroNavi; i++) {
+            naviGiocatore[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
+            naviComputer[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
         }
     }
 

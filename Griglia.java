@@ -8,14 +8,6 @@
 import java.util.Scanner;
 
 public class Griglia {
-    public static final char ACQUA_CHAR = '~';
-    // public static final char NAVE_CHAR = '☐';
-    // public static final char COLPITO_CHAR = '☒';
-    // public static final char MANCATO_CHAR = '☸';
-    public static final char NAVE_CHAR = 'O';
-    public static final char COLPITO_CHAR = '0';
-    public static final char MANCATO_CHAR = 'X';
-
     private final int dimensione;
     private Posizione[][] griglia;
 
@@ -27,6 +19,14 @@ public class Griglia {
                 griglia[i][j] = new Posizione(i, j);
             }
         }
+    }
+
+    public int getDimensione() {
+        return dimensione;
+    }
+
+    public Posizione[][] getGriglia() {
+        return griglia;
     }
 
     public void posizionaNavi(Nave[] navi, Scanner scanner) {
@@ -73,6 +73,18 @@ public class Griglia {
         }
     }
 
+    public void posizionaNaviComputer(Nave[] navi) {
+        for (Nave nave : navi) {
+            Posizione posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
+            Direzione direzione = Direzione.values()[(int) (Math.random() * 2)];
+            while (!isPosizioneValida(nave, posizione, direzione)) {
+                posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
+                direzione = Direzione.values()[(int) (Math.random() * 2)];
+            }
+            posizionaNave(nave, posizione, direzione);
+        }
+    }
+
     public boolean isPosizioneValida(Nave nave, Posizione posizione, Direzione direzione) {
         int dimensione = nave.getDimensione();
         int colonna = posizione.getColonna();
@@ -106,16 +118,16 @@ public class Griglia {
             for (int j = 0; j < dimensione; j++) {
                 switch (griglia[i][j].getOccupazione()) {
                     case NAVE:
-                        System.out.print(Colore.ANSI_YELLOW + NAVE_CHAR + Colore.ANSI_RESET + " ");
+                        System.out.print(Display.ANSI_YELLOW + Display.NAVE_CHAR + Display.ANSI_RESET + " ");
                         break;
                     case ACQUA:
-                        System.out.print(Colore.ANSI_BLUE + ACQUA_CHAR + Colore.ANSI_RESET + " ");
+                        System.out.print(Display.ANSI_BLUE + Display.ACQUA_CHAR + Display.ANSI_RESET + " ");
                         break;
                     case COLPITO:
-                        System.out.print(Colore.ANSI_RED + COLPITO_CHAR + Colore.ANSI_RESET + " ");
+                        System.out.print(Display.ANSI_RED + Display.COLPITO_CHAR + Display.ANSI_RESET + " ");
                         break;
                     case MANCATO:
-                        System.out.print(Colore.ANSI_WHITE + MANCATO_CHAR + Colore.ANSI_RESET + " ");
+                        System.out.print(Display.ANSI_WHITE + Display.MANCATO_CHAR + Display.ANSI_RESET + " ");
                         break;
                     default:
                         System.out.print("? ");
