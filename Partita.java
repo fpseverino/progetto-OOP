@@ -37,9 +37,27 @@ public class Partita {
         for (int i = 0; i < numeroNavi; i++) {
             System.out.print("Inserisci il tipo della nave " + (i + 1) + ": ");
             String tipo = scanner.nextLine();
-            int dimensione;
+            boolean tipoUsato = false;
+            for (int j = 0; j < i; j++) {
+                if (navi[j].getTipo().equals(tipo)) {
+                    tipoUsato = true;
+                    break;
+                }
+            }
+            while (tipoUsato) {
+                System.out.println("Il tipo della nave è già stato usato");
+                System.out.print("Inserisci il tipo della nave " + (i + 1) + ": ");
+                tipo = scanner.nextLine();
+                tipoUsato = false;
+                for (int j = 0; j < i; j++) {
+                    if (navi[j].getTipo().equals(tipo)) {
+                        tipoUsato = true;
+                        break;
+                    }
+                }
+            }
             System.out.print("Inserisci la dimensione della nave " + (i + 1) + ": ");
-            dimensione = scanner.nextInt();
+            int dimensione = scanner.nextInt();
             while (dimensione > dimensioneGriglia) {
                 System.out.println("La dimensione della nave non può essere maggiore della dimensione della griglia");
                 System.out.print("Inserisci la dimensione della nave " + (i + 1) + ": ");
@@ -56,5 +74,9 @@ public class Partita {
 
     public Griglia getGrigliaNaviGiocatore() {
         return grigliaNaviGiocatore;
+    }
+
+    public Griglia getGrigliaNaviComputer() {
+        return grigliaNaviComputer;
     }
 }

@@ -8,88 +8,94 @@
 import java.util.Scanner;
 
 public class Griglia {
-    public static final char ACQUA = '~';
-    // public static final char NAVE = '☐';
-    // public static final char COLPITO = '☒';
-    // public static final char MANCATO = '☸';
-    public static final char NAVE = 'O';
-    public static final char COLPITO = '0';
-    public static final char MANCATO = 'X';
+    public static final char ACQUA_CHAR = '~';
+    // public static final char NAVE_CHAR = '☐';
+    // public static final char COLPITO_CHAR = '☒';
+    // public static final char MANCATO_CHAR = '☸';
+    public static final char NAVE_CHAR = 'O';
+    public static final char COLPITO_CHAR = '0';
+    public static final char MANCATO_CHAR = 'X';
 
     private final int dimensione;
-    private char[][] griglia;
+    private Posizione[][] griglia;
 
     public Griglia(int dimensione) {
         this.dimensione = dimensione;
-        griglia = new char[dimensione][dimensione];
-        for (int i = 0; i < dimensione; i++)
-            for (int j = 0; j < dimensione; j++)
-                griglia[i][j] = ACQUA;
-    }
-
-    public Griglia(Griglia griglia) {
-        this.dimensione = griglia.dimensione;
-        this.griglia = new char[dimensione][dimensione];
-        for (int i = 0; i < dimensione; i++)
-            System.arraycopy(griglia.griglia[i], 0, this.griglia[i], 0, dimensione);
+        griglia = new Posizione[dimensione][dimensione];
+        for (int i = 0; i < dimensione; i++) {
+            for (int j = 0; j < dimensione; j++) {
+                griglia[i][j] = new Posizione(i, j);
+            }
+        }
     }
 
     public void posizionaNavi(Nave[] navi, Scanner scanner) {
-        stampa();
         for (Nave nave : navi) {
-            System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (" + nave.getDimensione() + "): ");
-            String posizione = scanner.nextLine();
-            Posizione posizioneNave = new Posizione(posizione.charAt(0), Integer.parseInt(posizione.substring(1)));
-            System.out.print("Inserisci la direzione della nave " + nave.getTipo() + " (orizzontale/verticale): ");
-            Direzione direzione = Direzione.fromString(scanner.nextLine());
-            Nave naveDaPosizionare = new Nave(nave.getTipo(), nave.getDimensione());
-            naveDaPosizionare.setPosizione(posizioneNave);
-            naveDaPosizionare.setDirezione(direzione);
-            while (!posizioneValida(naveDaPosizionare)) {
-                System.out.println("La nave non può essere posizionata in questa posizione");
-                System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (" + nave.getDimensione() + "): ");
-                posizione = scanner.nextLine();
-                posizioneNave = new Posizione(posizione.charAt(0), Integer.parseInt(posizione.substring(1)));
-                System.out.print("Inserisci la direzione della nave " + nave.getTipo() + " (orizzontale/verticale): ");
-                direzione = Direzione.fromString(scanner.nextLine());
-                naveDaPosizionare.setPosizione(posizioneNave);
-                naveDaPosizionare.setDirezione(direzione);
+            print();
+            System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (lunghezza " + nave.getDimensione() + "): ");
+            String input = scanner.next();
+            char c = input.charAt(0);
+            int num = Integer.parseInt(input.substring(1));
+            Posizione posizione = new Posizione(c, num);
+            System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
+            Direzione direzione = Direzione.fromString(scanner.next());
+            while (!isPosizioneValida(nave, posizione, direzione)) {
+                System.out.println("La posizione non è valida");
+                System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (lunghezza " + nave.getDimensione() + "): ");
+                input = scanner.next();
+                c = input.charAt(0);
+                num = Integer.parseInt(input.substring(1));
+                posizione = new Posizione(c, num);
+                System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
+                direzione = Direzione.fromString(scanner.next());
+                if (scanner.hasNextLine()) {
+                    scanner.nextLine(); // consume any remaining input
+                }
             }
-            if (direzione == Direzione.ORIZZONTALE) {
-                for (int i = 0; i < nave.getDimensione(); i++)
-                    griglia[posizioneNave.getRiga()][posizioneNave.getColonna() + i] = NAVE;
-            } else {
-                for (int i = 0; i < nave.getDimensione(); i++)
-                    griglia[posizioneNave.getRiga() + i][posizioneNave.getColonna()] = NAVE;
-            }
-            stampa();
+            posizionaNave(nave, posizione, direzione);
         }
     }
 
-    public boolean posizioneValida(Nave nave) {
-        Posizione posizione = nave.getPosizione();
-        Direzione direzione = nave.getDirezione();
-        int dimensioneNave = nave.getDimensione();
-        if (direzione == Direzione.ORIZZONTALE) {
-            for (int i = 0; i < dimensioneNave; i++) {
-                if (i + posizione.getColonna() >= dimensione)
-                    return false;
-                if (griglia[posizione.getRiga()][posizione.getColonna() + i] == NAVE)
-                    return false;
+    public void posizionaNave(Nave nave, Posizione posizione, Direzione direzione) {
+        int dimensione = nave.getDimensione();
+        int colonna = posizione.getColonna();
+        int riga = posizione.getRiga();
+        if (direzione == Direzione.VERTICALE) {
+            for (int i = riga; i < riga + dimensione; i++) {
+                griglia[i][colonna].setOccupazione(Posizione.Occupazione.NAVE);
+                griglia[i][colonna].setTipoNave(nave.getTipo());
             }
-            return posizione.getColonna() + dimensioneNave <= dimensione;
         } else {
-            for (int i = 0; i < dimensioneNave; i++) {
-                if (i + posizione.getRiga() >= dimensione)
-                    return false;
-                if (griglia[posizione.getRiga() + i][posizione.getColonna()] == NAVE)
-                    return false;
+            for (int i = colonna; i < colonna + dimensione; i++) {
+                griglia[riga][i].setOccupazione(Posizione.Occupazione.NAVE);
+                griglia[riga][i].setTipoNave(nave.getTipo());
             }
-            return posizione.getRiga() + dimensioneNave <= dimensione;
         }
     }
 
-    public void stampa() {
+    public boolean isPosizioneValida(Nave nave, Posizione posizione, Direzione direzione) {
+        int dimensione = nave.getDimensione();
+        int colonna = posizione.getColonna();
+        int riga = posizione.getRiga();
+        if (colonna < 0 || colonna >= this.dimensione || riga < 0 || riga >= this.dimensione)
+            return false;
+        if (direzione == Direzione.VERTICALE) {
+            if (riga + dimensione > this.dimensione)
+                return false;
+            for (int i = riga; i < riga + dimensione; i++)
+                if (griglia[i][colonna].getOccupazione() == Posizione.Occupazione.NAVE)
+                    return false;
+        } else {
+            if (colonna + dimensione > this.dimensione)
+                return false;
+            for (int i = colonna; i < colonna + dimensione; i++)
+                if (griglia[riga][i].getOccupazione() == Posizione.Occupazione.NAVE)
+                    return false;
+        }
+        return true;
+    }
+
+    public void print() {
         System.out.print("   ");
         for (int i = 0; i < dimensione; i++)
             System.out.print((char) ('A' + i) + " ");
@@ -98,21 +104,21 @@ public class Griglia {
             System.out.print(i + 1 + " ");
             if (i < 9) System.out.print(" ");
             for (int j = 0; j < dimensione; j++) {
-                switch (griglia[i][j]) {
+                switch (griglia[i][j].getOccupazione()) {
                     case NAVE:
-                        System.out.print(Colore.ANSI_YELLOW + NAVE + Colore.ANSI_RESET + " ");
-                        break;
-                    case COLPITO:
-                        System.out.print(Colore.ANSI_RED + COLPITO + Colore.ANSI_RESET + " ");
-                        break;
-                    case MANCATO:
-                        System.out.print(Colore.ANSI_WHITE + MANCATO + Colore.ANSI_RESET + " ");
+                        System.out.print(Colore.ANSI_YELLOW + NAVE_CHAR + Colore.ANSI_RESET + " ");
                         break;
                     case ACQUA:
-                        System.out.print(Colore.ANSI_BLUE + ACQUA + Colore.ANSI_RESET + " ");
+                        System.out.print(Colore.ANSI_BLUE + ACQUA_CHAR + Colore.ANSI_RESET + " ");
+                        break;
+                    case COLPITO:
+                        System.out.print(Colore.ANSI_RED + COLPITO_CHAR + Colore.ANSI_RESET + " ");
+                        break;
+                    case MANCATO:
+                        System.out.print(Colore.ANSI_WHITE + MANCATO_CHAR + Colore.ANSI_RESET + " ");
                         break;
                     default:
-                        System.out.print(griglia[i][j] + " ");
+                        System.out.print("? ");
                 }
             }
             System.out.println();

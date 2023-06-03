@@ -12,15 +12,11 @@ public class Main {
         stampaTitolo();
         System.out.println();
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Inserisci la dimensione della griglia: ");
-        int dimensione = scanner.nextInt();
-        System.out.print("Inserisci il numero di navi: ");
-        int numeroNavi = scanner.nextInt();
-        scanner.nextLine();
-        Partita partita = new Partita(dimensione, numeroNavi);
+        Partita partita = new Partita(5, 3);
         partita.initNavi(scanner);
-        Griglia grigliaNaviGiocatore = partita.getGrigliaNaviGiocatore();
-        grigliaNaviGiocatore.posizionaNavi(partita.getNavi(), scanner);
+        Griglia grigliaGiocatore = partita.getGrigliaNaviGiocatore();
+        grigliaGiocatore.posizionaNavi(partita.getNavi(), scanner);
+        grigliaGiocatore.print();
         scanner.close();
     }
 

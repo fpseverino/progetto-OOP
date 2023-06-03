@@ -8,8 +8,7 @@
 public class Nave {
     private final String tipo;
     private final int dimensione;
-    private Posizione posizione;
-    private Direzione direzione;
+    private boolean affondata = false;
 
     public Nave(String tipo, int dimensione) {
         this.tipo = tipo;
@@ -24,19 +23,11 @@ public class Nave {
         return dimensione;
     }
 
-    public Posizione getPosizione() {
-        return posizione;
+    public boolean isAffondata() {
+        return affondata;
     }
 
-    public void setPosizione(Posizione posizione) {
-        this.posizione = posizione;
-    }
-
-    public Direzione getDirezione() {
-        return direzione;
-    }
-
-    public void setDirezione(Direzione direzione) {
-        this.direzione = direzione;
+    public void setAffondata(boolean affondata) {
+        this.affondata = affondata;
     }
 }
