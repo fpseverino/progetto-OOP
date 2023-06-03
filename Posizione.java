@@ -10,6 +10,7 @@ public class Posizione {
     private final int riga;
 
     public Posizione(char colonna, int riga) throws IllegalArgumentException {
+        colonna = Character.toUpperCase(colonna);
         if (colonna < 'A' || riga < 1) {
             throw new IllegalArgumentException("Posizione non valida");
         }

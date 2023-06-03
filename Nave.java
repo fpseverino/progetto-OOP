@@ -8,7 +8,7 @@
 public class Nave {
     private final String tipo;
     private final int dimensione;
-    private Posizione posizioneIniziale;
+    private Posizione posizione;
     private Direzione direzione;
 
     public Nave(String tipo, int dimensione) {
@@ -24,12 +24,12 @@ public class Nave {
         return dimensione;
     }
 
-    public Posizione getPosizioneIniziale() {
-        return posizioneIniziale;
+    public Posizione getPosizione() {
+        return posizione;
     }
 
-    public void setPosizioneIniziale(Posizione posizioneIniziale) {
-        this.posizioneIniziale = posizioneIniziale;
+    public void setPosizione(Posizione posizione) {
+        this.posizione = posizione;
     }
 
     public Direzione getDirezione() {

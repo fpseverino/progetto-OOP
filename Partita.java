@@ -11,16 +11,26 @@ public class Partita {
     private final int dimensioneGriglia;
     private final int numeroNavi;
     private Nave[] navi;
-    private Giocatore giocatore;
-    private Giocatore computer;
+    private Griglia grigliaNaviGiocatore;
+    private Griglia grigliaNaviComputer;
+    private Griglia grigliaColpiGiocatore;
+    private Griglia grigliaColpiComputer;
     private int numeroTurni = 0;
 
-    public Partita(int dimensioneGriglia, int numeroNavi) {
+    public Partita(int dimensioneGriglia, int numeroNavi) throws IllegalArgumentException {
+        if (dimensioneGriglia < 5 || dimensioneGriglia > 26) {
+            throw new IllegalArgumentException("La dimensione della griglia deve essere compresa tra 5 e 26");
+        }
+        if (numeroNavi < 1 || numeroNavi > dimensioneGriglia) {
+            throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
+        }
         this.dimensioneGriglia = dimensioneGriglia;
         this.numeroNavi = numeroNavi;
         this.navi = new Nave[numeroNavi];
-        this.giocatore = new Giocatore(dimensioneGriglia, false);
-        this.computer = new Giocatore(dimensioneGriglia, true);
+        this.grigliaNaviGiocatore = new Griglia(dimensioneGriglia);
+        this.grigliaNaviComputer = new Griglia(dimensioneGriglia);
+        this.grigliaColpiGiocatore = new Griglia(dimensioneGriglia);
+        this.grigliaColpiComputer = new Griglia(dimensioneGriglia);
     }
 
     public void initNavi(Scanner scanner) {
@@ -44,7 +54,7 @@ public class Partita {
         return navi;
     }
 
-    public Giocatore getGiocatore() {
-        return giocatore;
+    public Griglia getGrigliaNaviGiocatore() {
+        return grigliaNaviGiocatore;
     }
 }
