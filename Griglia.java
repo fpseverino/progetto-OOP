@@ -15,11 +15,9 @@ public class Griglia {
     public Griglia(int dimensione, Nave[] navi) {
         this.dimensione = dimensione;
         griglia = new Posizione[dimensione][dimensione];
-        for (int i = 0; i < dimensione; i++) {
-            for (int j = 0; j < dimensione; j++) {
+        for (int i = 0; i < dimensione; i++)
+            for (int j = 0; j < dimensione; j++)
                 griglia[i][j] = new Posizione(i, j);
-            }
-        }
         this.navi = navi;
     }
 
@@ -38,23 +36,28 @@ public class Griglia {
             System.out.println();
             System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (lunghezza " + nave.getDimensione() + "): ");
             String input = scanner.next();
+            if (scanner.hasNextLine())
+                scanner.nextLine();
             char c = input.charAt(0);
             int num = Integer.parseInt(input.substring(1));
             Posizione posizione = new Posizione(c, num);
             System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
             Direzione direzione = Direzione.fromString(scanner.next());
+            if (scanner.hasNextLine())
+                scanner.nextLine();
             while (!isPosizioneValida(nave, posizione, direzione)) {
                 System.out.println("La posizione non è valida");
                 System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (lunghezza " + nave.getDimensione() + "): ");
                 input = scanner.next();
+                if (scanner.hasNextLine())
+                    scanner.nextLine();
                 c = input.charAt(0);
                 num = Integer.parseInt(input.substring(1));
                 posizione = new Posizione(c, num);
                 System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
                 direzione = Direzione.fromString(scanner.next());
-                if (scanner.hasNextLine()) {
+                if (scanner.hasNextLine())
                     scanner.nextLine();
-                }
             }
             posizionaNave(nave, posizione, direzione);
         }
@@ -79,12 +82,12 @@ public class Griglia {
         int riga = posizione.getRiga();
         if (direzione == Direzione.VERTICALE) {
             for (int i = riga; i < riga + dimensione; i++) {
-                griglia[i][colonna].setOccupazione(Posizione.Occupazione.NAVE);
+                griglia[i][colonna].setCasella(Posizione.Casella.NAVE);
                 griglia[i][colonna].setTipoNave(nave.getTipo());
             }
         } else {
             for (int i = colonna; i < colonna + dimensione; i++) {
-                griglia[riga][i].setOccupazione(Posizione.Occupazione.NAVE);
+                griglia[riga][i].setCasella(Posizione.Casella.NAVE);
                 griglia[riga][i].setTipoNave(nave.getTipo());
             }
         }
@@ -100,13 +103,13 @@ public class Griglia {
             if (riga + dimensione > this.dimensione)
                 return false;
             for (int i = riga; i < riga + dimensione; i++)
-                if (griglia[i][colonna].getOccupazione() == Posizione.Occupazione.NAVE)
+                if (griglia[i][colonna].getCasella() == Posizione.Casella.NAVE)
                     return false;
         } else {
             if (colonna + dimensione > this.dimensione)
                 return false;
             for (int i = colonna; i < colonna + dimensione; i++)
-                if (griglia[riga][i].getOccupazione() == Posizione.Occupazione.NAVE)
+                if (griglia[riga][i].getCasella() == Posizione.Casella.NAVE)
                     return false;
         }
         return true;
@@ -115,20 +118,20 @@ public class Griglia {
     public void sparaColpo(Posizione posizione) {
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
-        switch (griglia[riga][colonna].getOccupazione()) {
+        switch (griglia[riga][colonna].getCasella()) {
             case NAVE:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.COLPITA);
                 griglia[riga][colonna].setTipoNave(null);
                 break;
             case ACQUA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.MANCATA);
                 break;
             case COLPITA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.COLPITA);
                 griglia[riga][colonna].setTipoNave(null);
                 break;
             case MANCATA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.MANCATA);
                 break;
         }
     }
@@ -137,20 +140,20 @@ public class Griglia {
         Posizione posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
-        switch (griglia[riga][colonna].getOccupazione()) {
+        switch (griglia[riga][colonna].getCasella()) {
             case NAVE:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.COLPITA);
                 griglia[riga][colonna].setTipoNave(null);
                 break;
             case ACQUA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.MANCATA);
                 break;
             case COLPITA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.COLPITA);
                 griglia[riga][colonna].setTipoNave(null);
                 break;
             case MANCATA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.MANCATA);
                 break;
         }
     }
@@ -158,40 +161,30 @@ public class Griglia {
     public void checkColpo(Posizione posizione, Griglia grigliaComputer) {
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
-        switch (grigliaComputer.getGriglia()[riga][colonna].getOccupazione()) {
+        switch (grigliaComputer.getGriglia()[riga][colonna].getCasella()) {
             case NAVE:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.COLPITA);
                 break;
             case ACQUA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.MANCATA);
                 break;
             case COLPITA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.COLPITA);
                 break;
             case MANCATA:
-                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                griglia[riga][colonna].setCasella(Posizione.Casella.MANCATA);
                 break;
         }
     }
 
     public void checkAffondate() {
-        // stampa il tipoNave di ogni posizione
-        for (int i = 0; i < dimensione; i++) {
-            for (int j = 0; j < dimensione; j++)
-                System.out.print(griglia[i][j].getTipoNave() + " ");
-            System.out.println();
-        }
-
         for (Nave nave : navi) {
             if (!nave.isAffondata()) {
                 boolean trovata = false;
-                for (int i = 0; i < dimensione; i++) {
-                    for (int j = 0; j < dimensione; j++) {
-                        if (griglia[i][j].getTipoNave() == nave.getTipo() && griglia[i][j].getOccupazione() == Posizione.Occupazione.NAVE) {
+                for (int i = 0; i < dimensione; i++)
+                    for (int j = 0; j < dimensione; j++)
+                        if (griglia[i][j].getTipoNave() == nave.getTipo() && griglia[i][j].getCasella() == Posizione.Casella.NAVE)
                             trovata = true;
-                        }
-                    }
-                }
                 if (!trovata)
                     nave.affonda();
             }
@@ -199,10 +192,9 @@ public class Griglia {
     }
 
     public boolean naviTutteAffondate() {
-        for (Nave nave : navi) {
+        for (Nave nave : navi)
             if (!nave.isAffondata())
                 return false;
-        }
         return true;
     }
 
@@ -220,22 +212,22 @@ public class Griglia {
             System.out.print(i + 1 + " ");
             if (i < 9) System.out.print(" ");
             for (int j = 0; j < dimensione; j++) {
-                switch (griglia[i][j].getOccupazione()) {
+                String casella = "";
+                switch (griglia[i][j].getCasella()) {
                     case NAVE:
-                        System.out.print(Display.ANSI_YELLOW + Display.NAVE_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_YELLOW;
                         break;
                     case ACQUA:
-                        System.out.print(Display.ANSI_BLUE + Display.ACQUA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_BLUE;
                         break;
                     case COLPITA:
-                        System.out.print(Display.ANSI_RED + Display.COLPITA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_RED;
                         break;
                     case MANCATA:
-                        System.out.print(Display.ANSI_WHITE + Display.MANCATA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_WHITE;
                         break;
-                    default:
-                        System.out.print("? ");
                 }
+                System.out.print(casella + griglia[i][j].getCasella().getLabel() + Display.ANSI_RESET + " ");
             }
             System.out.println();
         }

@@ -24,12 +24,4 @@ public final class Display {
     public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
     public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-
-    public static final char ACQUA_CHAR = '~';
-    // public static final char NAVE_CHAR = '☐';
-    // public static final char COLPITA_CHAR = '☒';
-    // public static final char MANCATA_CHAR = '☸';
-    public static final char NAVE_CHAR = 'O';
-    public static final char COLPITA_CHAR = '0';
-    public static final char MANCATA_CHAR = 'X';
 }

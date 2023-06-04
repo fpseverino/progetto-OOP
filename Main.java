@@ -15,9 +15,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Inserisci la dimensione della griglia: ");
         int dimensioneGriglia = scanner.nextInt();
+        if (scanner.hasNextLine())
+            scanner.nextLine();
         System.out.print("Inserisci il numero di navi: ");
         int numeroNavi = scanner.nextInt();
-        scanner.nextLine();
+        if (scanner.hasNextLine())
+            scanner.nextLine();
 
         Partita partita = new Partita(dimensioneGriglia, numeroNavi, scanner);
 
@@ -38,10 +41,6 @@ public class Main {
         System.out.println("Navi computer:");
         grigliaNaviComputer.printRecapNavi();
         System.out.println();
-
-        if (scanner.hasNextLine()) {
-            scanner.nextLine();
-        }
 
         while (!grigliaNaviComputer.naviTutteAffondate() && !grigliaNaviGiocatore.naviTutteAffondate()) {
             System.out.print("Inserisci la posizione da colpire: ");
@@ -98,42 +97,44 @@ public class Main {
         for (int i = 0; i < grigliaGiocatore.getDimensione(); i++) {
             System.out.print(i + 1 + " ");
             if (i < 9) System.out.print(" ");
-            for (int j = 0; j < grigliaGiocatore.getDimensione(); j++)
-                switch (grigliaGiocatore.getGriglia()[i][j].getOccupazione()) {
+            for (int j = 0; j < grigliaGiocatore.getDimensione(); j++) {
+                String casella = "";
+                switch (grigliaGiocatore.getGriglia()[i][j].getCasella()) {
                     case NAVE:
-                        System.out.print(Display.ANSI_YELLOW + Display.NAVE_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_YELLOW;
                         break;
                     case ACQUA:
-                        System.out.print(Display.ANSI_BLUE + Display.ACQUA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_BLUE;
                         break;
                     case COLPITA:
-                        System.out.print(Display.ANSI_RED + Display.COLPITA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_RED;
                         break;
                     case MANCATA:
-                        System.out.print(Display.ANSI_WHITE + Display.MANCATA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_WHITE;
                         break;
-                    default:
-                        System.out.print("? ");
                 }
+                System.out.print(casella + grigliaGiocatore.getGriglia()[i][j].getCasella().getLabel() + Display.ANSI_RESET + " ");
+            }
             System.out.print(" " + (i + 1) + " ");
             if (i < 9) System.out.print(" ");
-            for (int j = 0; j < grigliaComputer.getDimensione(); j++)
-                switch (grigliaComputer.getGriglia()[i][j].getOccupazione()) {
+            for (int j = 0; j < grigliaComputer.getDimensione(); j++) {
+                String casella = "";
+                switch (grigliaComputer.getGriglia()[i][j].getCasella()) {
                     case NAVE:
-                        System.out.print(Display.ANSI_YELLOW + Display.NAVE_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_YELLOW;
                         break;
                     case ACQUA:
-                        System.out.print(Display.ANSI_BLUE + Display.ACQUA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_BLUE;
                         break;
                     case COLPITA:
-                        System.out.print(Display.ANSI_RED + Display.COLPITA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_RED;
                         break;
                     case MANCATA:
-                        System.out.print(Display.ANSI_WHITE + Display.MANCATA_CHAR + Display.ANSI_RESET + " ");
+                        casella += Display.ANSI_WHITE;
                         break;
-                    default:
-                        System.out.print("? ");
                 }
+                System.out.print(casella + grigliaComputer.getGriglia()[i][j].getCasella().getLabel() + Display.ANSI_RESET + " ");
+            }
             System.out.println();
         }
     }
