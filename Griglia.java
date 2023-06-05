@@ -159,7 +159,11 @@ public class Griglia {
             case ACQUA:
                 griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
                 break;
-            default:
+            case COLPITA:
+                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                break;
+            case MANCATA:
+                griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
                 break;
         }
     }
