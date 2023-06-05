@@ -16,10 +16,24 @@ public class Main {
         int dimensioneGriglia = scanner.nextInt();
         if (scanner.hasNextLine())
             scanner.nextLine();
+        while (dimensioneGriglia < 5 || dimensioneGriglia > 26) {
+            System.out.println("La dimensione della griglia deve essere compresa tra 5 e 26");
+            System.out.print("Inserisci la dimensione della griglia: ");
+            dimensioneGriglia = scanner.nextInt();
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+        }
         System.out.print("Inserisci il numero di navi: ");
         int numeroNavi = scanner.nextInt();
         if (scanner.hasNextLine())
             scanner.nextLine();
+        while (numeroNavi < 1 || numeroNavi > dimensioneGriglia) {
+            System.out.println("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
+            System.out.print("Inserisci il numero di navi: ");
+            numeroNavi = scanner.nextInt();
+            if (scanner.hasNextLine())
+                scanner.nextLine();
+        }
 
         Partita partita = new Partita(dimensioneGriglia, numeroNavi, scanner);
 
