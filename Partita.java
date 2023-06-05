@@ -18,11 +18,7 @@ public class Partita {
     private Griglia grigliaColpiGiocatore;
     private int numeroTurni = 0;
 
-    public Partita(int dimensioneGriglia, int numeroNavi, Scanner scanner) throws IllegalArgumentException {
-        if (dimensioneGriglia < 5 || dimensioneGriglia > 26)
-            throw new IllegalArgumentException("La dimensione della griglia deve essere compresa tra 5 e 26");
-        if (numeroNavi < 1 || numeroNavi > dimensioneGriglia)
-            throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
+    public Partita(int dimensioneGriglia, int numeroNavi, Scanner scanner) {
         this.dimensioneGriglia = dimensioneGriglia;
         this.numeroNavi = numeroNavi;
         this.navi = new Nave[numeroNavi];
