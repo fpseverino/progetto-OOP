@@ -34,7 +34,7 @@ public class Griglia {
             print();
             System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (lunghezza " + nave.getDimensione() + "): ");
             String input = scanner.nextLine();
-            while (input.length() != 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
+            while (input.length() >= 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
                 System.out.println("La posizione non è valida");
                 System.out.print("Inserisci la posizione della nave " + nave.getTipo() + " (lunghezza " + nave.getDimensione() + "): ");
                 input = scanner.nextLine();
