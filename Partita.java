@@ -30,9 +30,9 @@ public class Partita {
         this.naviGiocatore = new Nave[numeroNavi];
         this.naviComputer = new Nave[numeroNavi];
         for (int i = 0; i < numeroNavi; i++)
-            naviGiocatore[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
+            naviGiocatore[i] = new Nave(navi[i].getNome(), navi[i].getDimensione());
         for (int i = 0; i < numeroNavi; i++)
-            naviComputer[i] = new Nave(navi[i].getTipo(), navi[i].getDimensione());
+            naviComputer[i] = new Nave(navi[i].getNome(), navi[i].getDimensione());
         this.grigliaNaviGiocatore = new Griglia(dimensioneGriglia, naviGiocatore);
         this.grigliaNaviComputer = new Griglia(dimensioneGriglia, naviComputer);
         this.grigliaColpiGiocatore = new Griglia(dimensioneGriglia, null);
@@ -60,39 +60,39 @@ public class Partita {
 
     public void initNavi(Scanner scanner) {
         for (int i = 0; i < numeroNavi; i++) {
-            System.out.print("Inserisci il tipo della nave " + (i + 1) + ": ");
-            String tipo = scanner.nextLine();
-            boolean tipoUsato = false;
+            System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
+            String nome = scanner.nextLine();
+            boolean nomeUsato = false;
             for (int j = 0; j < i; j++) {
-                if (navi[j].getTipo().equals(tipo)) {
-                    tipoUsato = true;
+                if (navi[j].getNome().equals(nome)) {
+                    nomeUsato = true;
                     break;
                 }
             }
-            while (tipoUsato) {
-                System.out.println("Il tipo della nave è già stato usato");
-                System.out.print("Inserisci il tipo della nave " + (i + 1) + ": ");
-                tipo = scanner.nextLine();
-                tipoUsato = false;
+            while (nomeUsato) {
+                System.out.println("Il nome " + nome + " è già stato usato");
+                System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
+                nome = scanner.nextLine();
+                nomeUsato = false;
                 for (int j = 0; j < i; j++) {
-                    if (navi[j].getTipo().equals(tipo)) {
-                        tipoUsato = true;
+                    if (navi[j].getNome().equals(nome)) {
+                        nomeUsato = true;
                         break;
                     }
                 }
             }
-            System.out.print("Inserisci la dimensione della nave " + (i + 1) + ": ");
+            System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
             int dimensione = scanner.nextInt();
             if (scanner.hasNextLine())
                 scanner.nextLine();
             while (dimensione > dimensioneGriglia || dimensione < 1) {
-                System.out.println("La dimensione della nave non può essere maggiore della dimensione della griglia o minore di 1");
-                System.out.print("Inserisci la dimensione della nave " + (i + 1) + ": ");
+                System.out.println("La dimensione della nave non può essere maggiore della dimensione della griglia (" + dimensioneGriglia + ") o minore di 1");
+                System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
                 dimensione = scanner.nextInt();
                 if (scanner.hasNextLine())
                     scanner.nextLine();
             }
-            navi[i] = new Nave(tipo, dimensione);
+            navi[i] = new Nave(nome, dimensione);
         }
     }
 }

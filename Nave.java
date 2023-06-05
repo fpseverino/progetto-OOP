@@ -6,17 +6,17 @@
 //
 
 public class Nave {
-    private final String tipo;
+    private final String nome;
     private final int dimensione;
     private boolean affondata = false;
 
-    public Nave(String tipo, int dimensione) {
-        this.tipo = tipo;
+    public Nave(String nome, int dimensione) {
+        this.nome = nome;
         this.dimensione = dimensione;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getNome() {
+        return nome;
     }
 
     public int getDimensione() {

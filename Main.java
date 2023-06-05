@@ -92,7 +92,7 @@ public class Main {
             if (i < 9) System.out.print(" ");
             for (int j = 0; j < grigliaGiocatore.getDimensione(); j++) {
                 String casella = "";
-                switch (grigliaGiocatore.getGriglia()[i][j].getCasella()) {
+                switch (grigliaGiocatore.getGriglia()[i][j].getOccupazione()) {
                     case NAVE:
                         casella += Display.ANSI_YELLOW;
                         break;
@@ -106,13 +106,13 @@ public class Main {
                         casella += Display.ANSI_WHITE;
                         break;
                 }
-                System.out.print(casella + grigliaGiocatore.getGriglia()[i][j].getCasella().getLabel() + Display.ANSI_RESET + " ");
+                System.out.print(casella + grigliaGiocatore.getGriglia()[i][j].getOccupazione().getLabel() + Display.ANSI_RESET + " ");
             }
             System.out.print(" " + (i + 1) + " ");
             if (i < 9) System.out.print(" ");
             for (int j = 0; j < grigliaComputer.getDimensione(); j++) {
                 String casella = "";
-                switch (grigliaComputer.getGriglia()[i][j].getCasella()) {
+                switch (grigliaComputer.getGriglia()[i][j].getOccupazione()) {
                     case NAVE:
                         casella += Display.ANSI_YELLOW;
                         break;
@@ -126,7 +126,7 @@ public class Main {
                         casella += Display.ANSI_WHITE;
                         break;
                 }
-                System.out.print(casella + grigliaComputer.getGriglia()[i][j].getCasella().getLabel() + Display.ANSI_RESET + " ");
+                System.out.print(casella + grigliaComputer.getGriglia()[i][j].getOccupazione().getLabel() + Display.ANSI_RESET + " ");
             }
             System.out.println();
         }

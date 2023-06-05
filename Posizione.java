@@ -8,9 +8,9 @@
 public class Posizione {
     private final int colonna;
     private final int riga;
-    private String tipoNave;
+    private String nomeNave;
 
-    public enum Casella {
+    public enum Occupazione {
         ACQUA('~'),
         NAVE('O'),
         MANCATA('X'),
@@ -18,7 +18,7 @@ public class Posizione {
 
         public final char label;
 
-        Casella(char label) {
+        Occupazione(char label) {
             this.label = label;
         }
 
@@ -27,15 +27,15 @@ public class Posizione {
         }
     }
 
-    private Casella casella;
+    private Occupazione occupazione;
 
     public Posizione(int colonna, int riga) throws IllegalArgumentException {
         if (colonna < 0 || riga < 0)
             throw new IllegalArgumentException("Posizione non valida");
         this.colonna = colonna;
         this.riga = riga;
-        this.casella = Casella.ACQUA;
-        this.tipoNave = null;
+        this.occupazione = Occupazione.ACQUA;
+        this.nomeNave = null;
     }
 
     public Posizione(char colonna, int riga) throws IllegalArgumentException {
@@ -50,19 +50,19 @@ public class Posizione {
         return riga;
     }
 
-    public Casella getCasella() {
-        return casella;
+    public Occupazione getOccupazione() {
+        return occupazione;
     }
 
-    public void setCasella(Casella casella) {
-        this.casella = casella;
+    public void setOccupazione(Occupazione occupazione) {
+        this.occupazione = occupazione;
     }
 
-    public String getTipoNave() {
-        return tipoNave;
+    public String getNomeNave() {
+        return nomeNave;
     }
 
-    public void setTipoNave(String tipoNave) {
-        this.tipoNave = tipoNave;
+    public void setNomeNave(String nomeNave) {
+        this.nomeNave = nomeNave;
     }
 }
