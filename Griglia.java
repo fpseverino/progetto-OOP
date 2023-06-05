@@ -118,6 +118,8 @@ public class Griglia {
     public void sparaColpo(Posizione posizione) {
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
+        if (colonna < 0 || colonna >= dimensione || riga < 0 || riga >= dimensione)
+            return;
         switch (griglia[riga][colonna].getCasella()) {
             case NAVE:
                 griglia[riga][colonna].setTipoNave(null);
