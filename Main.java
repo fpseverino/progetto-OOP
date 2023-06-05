@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class Main {
     static public void main(String[] args) {
         printTitolo();
-        System.out.println();
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Inserisci la dimensione della griglia: ");
@@ -32,21 +31,22 @@ public class Main {
 
         Griglia grigliaColpiGiocatore = partita.getGrigliaColpiGiocatore();
 
-        System.out.println();
         printGriglie(grigliaNaviGiocatore, grigliaColpiGiocatore);
-        System.out.println();
-        System.out.println("Navi giocatore:");
-        grigliaNaviGiocatore.printRecapNavi();
-        System.out.println();
-        System.out.println("Navi computer:");
-        grigliaNaviComputer.printRecapNavi();
-        System.out.println();
+        grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
+        grigliaNaviComputer.printRecapNavi("Navi computer:");
 
         while (!grigliaNaviComputer.naviTutteAffondate() && !grigliaNaviGiocatore.naviTutteAffondate()) {
             System.out.print("Inserisci la posizione da colpire: ");
             String input = scanner.nextLine();
             if (input.equals("exit"))
                 break;
+            while (input.length() != 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
+                System.out.println("La posizione non è valida");
+                System.out.print("Inserisci la posizione da colpire: ");
+                input = scanner.nextLine();
+                if (input.equals("exit"))
+                    break;
+            }
             char c = input.charAt(0);
             int num = Integer.parseInt(input.substring(1));
             Posizione posizione = new Posizione(c, num);
@@ -59,17 +59,9 @@ public class Main {
             grigliaNaviGiocatore.checkAffondate();
             grigliaNaviComputer.checkAffondate();
 
-            System.out.println();
             printGriglie(grigliaNaviGiocatore, grigliaColpiGiocatore);
-            System.out.println();
-
-            System.out.println("Navi giocatore:");
-            grigliaNaviGiocatore.printRecapNavi();
-            System.out.println();
-
-            System.out.println("Navi computer:");
-            grigliaNaviComputer.printRecapNavi();
-            System.out.println();
+            grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
+            grigliaNaviComputer.printRecapNavi("Navi computer:");
         }
         scanner.close();
         System.out.println("Grazie per aver giocato!");
@@ -83,10 +75,11 @@ public class Main {
                 "██████╦╝███████║░░░██║░░░░░░██║░░░██║░░░░░█████╗░░╚█████╗░███████║██║██████╔╝\n" +
                 "██╔══██╗██╔══██║░░░██║░░░░░░██║░░░██║░░░░░██╔══╝░░░╚═══██╗██╔══██║██║██╔═══╝░\n" +
                 "██████╦╝██║░░██║░░░██║░░░░░░██║░░░███████╗███████╗██████╔╝██║░░██║██║██║░░░░░\n" +
-                "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░");
+                "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░\n");
     }
 
-    public static void printGriglie(Griglia grigliaGiocatore, Griglia grigliaComputer){
+    public static void printGriglie(Griglia grigliaGiocatore, Griglia grigliaComputer) {
+        System.out.println();
         System.out.print("   ");
         for (int i = 0; i < grigliaGiocatore.getDimensione(); i++)
             System.out.print((char) ('A' + i) + " ");
@@ -137,5 +130,6 @@ public class Main {
             }
             System.out.println();
         }
+        System.out.println();
     }
 }

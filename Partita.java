@@ -85,8 +85,8 @@ public class Partita {
             int dimensione = scanner.nextInt();
             if (scanner.hasNextLine())
                 scanner.nextLine();
-            while (dimensione > dimensioneGriglia) {
-                System.out.println("La dimensione della nave non può essere maggiore della dimensione della griglia");
+            while (dimensione > dimensioneGriglia || dimensione < 1) {
+                System.out.println("La dimensione della nave non può essere maggiore della dimensione della griglia o minore di 1");
                 System.out.print("Inserisci la dimensione della nave " + (i + 1) + ": ");
                 dimensione = scanner.nextInt();
                 if (scanner.hasNextLine())
