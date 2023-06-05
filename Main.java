@@ -40,7 +40,7 @@ public class Main {
             String input = scanner.nextLine();
             if (input.equals("exit"))
                 break;
-            while (input.length() >= 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
+            while (input.length() < 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
                 System.out.println("La posizione non è valida");
                 System.out.print("Inserisci la posizione da colpire: ");
                 input = scanner.nextLine();
