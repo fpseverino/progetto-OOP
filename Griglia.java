@@ -114,6 +114,29 @@ public class Griglia {
         }
         return true;
     }
+    public boolean isDirezioneValida(Nave nave, Posizione posizione, Direzione direzione){
+        int dimensioneNave = nave.getDimensione();
+        int colonna = posizione.getColonna();
+        int riga = posizione.getRiga();
+        if (colonna < 0 || colonna >= this.dimensione || riga < 0 || riga >= this.dimensione)
+            return false;
+        if (direzione == Direzione.VERTICALE) {
+            if (riga + dimensioneNave > this.dimensione)
+                return false;
+            for (int i = riga; i < riga + dimensioneNave; i++)
+                if (griglia[i][colonna].getOccupazione() == Posizione.Occupazione.NAVE)
+                    return false;
+        } else {
+            if (colonna + dimensioneNave > this.dimensione)
+                return false;
+            for (int i = colonna; i < colonna + dimensioneNave; i++)
+                if (griglia[riga][i].getOccupazione() == Posizione.Occupazione.NAVE)
+                    return false;
+        }
+        return true;
+    }
+
+
 
     public void sparaColpo(Posizione posizione) {
         int colonna = posizione.getColonna();
