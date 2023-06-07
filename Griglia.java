@@ -8,11 +8,16 @@
 import java.util.Scanner;
 
 public class Griglia {
+    public static final int MIN_DIMENSIONE = 3;
+    public static final int MAX_DIMENSIONE = 26;
+
     private final int dimensione;
     private Posizione[][] griglia;
     private Nave[] navi;
 
-    public Griglia(int dimensione, Nave[] navi) {
+    public Griglia(int dimensione, Nave[] navi) throws IllegalArgumentException {
+        if (dimensione < MIN_DIMENSIONE || dimensione > MAX_DIMENSIONE)
+            throw new IllegalArgumentException("La dimensione della griglia deve essere compresa tra " + MIN_DIMENSIONE + " e " + MAX_DIMENSIONE);
         this.dimensione = dimensione;
         griglia = new Posizione[dimensione][dimensione];
         for (int i = 0; i < dimensione; i++)
@@ -32,23 +37,15 @@ public class Griglia {
     public void posizionaNavi(Nave[] navi, Scanner scanner) {
         for (Nave nave : navi) {
             print();
-            System.out.print("Inserisci la posizione della nave " + nave.getNome() + " (lunghezza " + nave.getDimensione() + "): ");
-            String input = scanner.nextLine();
-            while (input.length() < 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
-                System.out.println("La posizione non è valida");
-                System.out.print("Inserisci la posizione della nave " + nave.getNome() + " (lunghezza " + nave.getDimensione() + "): ");
-                input = scanner.nextLine();
-            }
-            char c = input.charAt(0);
-            int num = Integer.parseInt(input.substring(1));
-            Posizione posizione = new Posizione(c, num);
-            System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
-            Direzione direzione = Direzione.fromString(scanner.nextLine());
+            String input;
+            char c;
+            int num;
+            Posizione posizione = null;
+            Direzione direzione = null;
             while (!isPosizioneValida(nave, posizione, direzione)) {
-                System.out.println("La posizione non è valida");
                 System.out.print("Inserisci la posizione della nave " + nave.getNome() + " (lunghezza " + nave.getDimensione() + "): ");
                 input = scanner.nextLine();
-                while (input.length() != 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
+                while (!Posizione.isPosizione(input)) {
                     System.out.println("La posizione non è valida");
                     System.out.print("Inserisci la posizione della nave " + nave.getNome() + " (lunghezza " + nave.getDimensione() + "): ");
                     input = scanner.nextLine();
@@ -56,8 +53,15 @@ public class Griglia {
                 c = input.charAt(0);
                 num = Integer.parseInt(input.substring(1));
                 posizione = new Posizione(c, num);
-                System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
-                direzione = Direzione.fromString(scanner.nextLine());
+                boolean direzioneValida = false;
+                while (!direzioneValida) {
+                    try {
+                        System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
+                        direzione = Direzione.fromString(scanner.nextLine());
+                        direzioneValida = true;
+                    } catch (IllegalArgumentException e) { System.out.println("La direzione non è valida"); }
+                }
+                if (!isPosizioneValida(nave, posizione, direzione)) System.out.println("La posizione non è valida");
             }
             posizionaNave(nave, posizione, direzione);
         }
@@ -94,6 +98,9 @@ public class Griglia {
     }
 
     public boolean isPosizioneValida(Nave nave, Posizione posizione, Direzione direzione) {
+        // Controlla che sia una posizione valida per posizionare la nave
+        if (posizione == null || direzione == null)
+            return false;
         int dimensioneNave = nave.getDimensione();
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
@@ -115,7 +122,18 @@ public class Griglia {
         return true;
     }
 
-    public void sparaColpo(Posizione posizione) {
+    public boolean isPosizioneValida(Posizione posizione) {
+        // Controlla che sia una posizione valida per sparare
+        int colonna = posizione.getColonna();
+        int riga = posizione.getRiga();
+        if (colonna < 0 || colonna >= dimensione || riga < 0 || riga >= dimensione)
+            return false;
+        return griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.ACQUA || griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.NAVE;
+    }
+
+    public void sparaColpo(Posizione posizione) throws IllegalArgumentException {
+        if (!isPosizioneValida(posizione))
+            throw new IllegalArgumentException("Posizione non valida");
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
         if (colonna < 0 || colonna >= dimensione || riga < 0 || riga >= dimensione)
@@ -136,6 +154,10 @@ public class Griglia {
     public void sparaColpo() {
         int colonna = (int) (Math.random() * dimensione);
         int riga = (int) (Math.random() * dimensione);
+        if (!isPosizioneValida(new Posizione(riga, colonna))) {
+            sparaColpo();
+            return;
+        }
         switch (griglia[riga][colonna].getOccupazione()) {
             case NAVE:
                 griglia[riga][colonna].setNomeNave(null);
