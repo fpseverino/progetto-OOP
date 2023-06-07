@@ -10,7 +10,11 @@ public class Nave {
     private final int dimensione;
     private boolean affondata = false;
 
-    public Nave(String nome, int dimensione) {
+    public Nave(String nome, int dimensione) throws IllegalArgumentException {
+        if (nome == null || nome.isBlank())
+            throw new IllegalArgumentException("Il nome della nave non può essere nullo o vuoto");
+        if (dimensione < 1)
+            throw new IllegalArgumentException("La dimensione della nave deve essere maggiore di 0");
         this.nome = nome;
         this.dimensione = dimensione;
     }

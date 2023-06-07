@@ -16,17 +16,18 @@ public class Partita {
     private Griglia grigliaNaviGiocatore;
     private Griglia grigliaNaviComputer;
     private Griglia grigliaColpiGiocatore;
-    private int numeroTurni = 0;
 
-    public Partita(int dimensioneGriglia, int numeroNavi, Scanner scanner) {
+    public Partita(int dimensioneGriglia, int numeroNavi, Scanner scanner) throws IllegalArgumentException {
+        if (numeroNavi < 1 || numeroNavi > dimensioneGriglia)
+            throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
         this.dimensioneGriglia = dimensioneGriglia;
         this.numeroNavi = numeroNavi;
         this.navi = new Nave[numeroNavi];
         initNavi(scanner);
         this.naviGiocatore = new Nave[numeroNavi];
-        this.naviComputer = new Nave[numeroNavi];
         for (int i = 0; i < numeroNavi; i++)
             naviGiocatore[i] = new Nave(navi[i].getNome(), navi[i].getDimensione());
+        this.naviComputer = new Nave[numeroNavi];
         for (int i = 0; i < numeroNavi; i++)
             naviComputer[i] = new Nave(navi[i].getNome(), navi[i].getDimensione());
         this.grigliaNaviGiocatore = new Griglia(dimensioneGriglia, naviGiocatore);
@@ -50,32 +51,13 @@ public class Partita {
         return grigliaColpiGiocatore;
     }
 
-    public int getNumeroTurni() {
-        return numeroTurni;
-    }
-
     public void initNavi(Scanner scanner) {
         for (int i = 0; i < numeroNavi; i++) {
             System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
-            String nome = scanner.nextLine();
-            boolean nomeUsato = false;
-            for (int j = 0; j < i; j++) {
-                if (navi[j].getNome().equals(nome)) {
-                    nomeUsato = true;
-                    break;
-                }
-            }
-            while (nomeUsato) {
+            String nome;
+            while (nomeNaveIsUsato(nome = scanner.nextLine(), i)) {
                 System.out.println("Il nome " + nome + " è già stato usato");
                 System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
-                nome = scanner.nextLine();
-                nomeUsato = false;
-                for (int j = 0; j < i; j++) {
-                    if (navi[j].getNome().equals(nome)) {
-                        nomeUsato = true;
-                        break;
-                    }
-                }
             }
             System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
             int dimensione = scanner.nextInt();
@@ -90,5 +72,12 @@ public class Partita {
             }
             navi[i] = new Nave(nome, dimensione);
         }
+    }
+
+    public boolean nomeNaveIsUsato(String nome, int numeroNaviInserite) {
+        for (int j = 0; j < numeroNaviInserite; j++)
+            if (navi[j].getNome().equals(nome))
+                return true;
+        return false;
     }
 }

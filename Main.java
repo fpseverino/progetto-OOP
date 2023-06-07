@@ -16,8 +16,8 @@ public class Main {
         int dimensioneGriglia = scanner.nextInt();
         if (scanner.hasNextLine())
             scanner.nextLine();
-        while (dimensioneGriglia < 5 || dimensioneGriglia > 26) {
-            System.out.println("La dimensione della griglia deve essere compresa tra 5 e 26");
+        while (dimensioneGriglia < Griglia.MIN_DIMENSIONE || dimensioneGriglia > Griglia.MAX_DIMENSIONE) {
+            System.out.println("La dimensione della griglia deve essere compresa tra " + Griglia.MIN_DIMENSIONE + " e " + Griglia.MAX_DIMENSIONE);
             System.out.print("Inserisci la dimensione della griglia: ");
             dimensioneGriglia = scanner.nextInt();
             if (scanner.hasNextLine())
@@ -50,21 +50,28 @@ public class Main {
         grigliaNaviComputer.printRecapNavi("Navi computer:");
 
         while (!grigliaNaviComputer.naviTutteAffondate() && !grigliaNaviGiocatore.naviTutteAffondate()) {
-            System.out.print("Inserisci la posizione da colpire: ");
-            String input = scanner.nextLine();
-            if (input.equals("exit"))
-                break;
-            while (input.length() < 2 || !Character.isLetter(input.charAt(0)) || !Character.isDigit(input.charAt(1))) {
-                System.out.println("La posizione non è valida");
-                System.out.print("Inserisci la posizione da colpire: ");
-                input = scanner.nextLine();
-                if (input.equals("exit"))
-                    break;
+            Posizione posizione = null;
+            boolean colpoValido = false;
+            while (!colpoValido) {
+                try {
+                    System.out.print("Inserisci la posizione da colpire: ");
+                    String input = scanner.nextLine();
+                    if (input.equals("exit"))
+                        break;
+                    while (!Posizione.isPosizione(input)) {
+                        System.out.println("La posizione non è valida");
+                        System.out.print("Inserisci la posizione da colpire: ");
+                        input = scanner.nextLine();
+                        if (input.equals("exit"))
+                            break;
+                    }
+                    char c = input.charAt(0);
+                    int num = Integer.parseInt(input.substring(1));
+                    posizione = new Posizione(c, num);
+                    grigliaNaviComputer.sparaColpo(posizione);
+                    colpoValido = true;
+                } catch (IllegalArgumentException e) { System.out.println(e.getMessage()); }
             }
-            char c = input.charAt(0);
-            int num = Integer.parseInt(input.substring(1));
-            Posizione posizione = new Posizione(c, num);
-            grigliaNaviComputer.sparaColpo(posizione);
 
             grigliaColpiGiocatore.checkColpo(posizione, grigliaNaviComputer);
 
