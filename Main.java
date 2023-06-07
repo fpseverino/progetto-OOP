@@ -13,23 +13,43 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Inserisci la dimensione della griglia: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("La dimensione della griglia deve essere un numero intero");
+            System.out.print("Inserisci la dimensione della griglia: ");
+            scanner.next();
+        }
         int dimensioneGriglia = scanner.nextInt();
         if (scanner.hasNextLine())
             scanner.nextLine();
         while (dimensioneGriglia < Griglia.MIN_DIMENSIONE || dimensioneGriglia > Griglia.MAX_DIMENSIONE) {
             System.out.println("La dimensione della griglia deve essere compresa tra " + Griglia.MIN_DIMENSIONE + " e " + Griglia.MAX_DIMENSIONE);
             System.out.print("Inserisci la dimensione della griglia: ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("La dimensione della griglia deve essere un numero intero");
+                System.out.print("Inserisci la dimensione della griglia: ");
+                scanner.next();
+            }
             dimensioneGriglia = scanner.nextInt();
             if (scanner.hasNextLine())
                 scanner.nextLine();
         }
         System.out.print("Inserisci il numero di navi: ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("Il numero di navi deve essere un numero intero");
+            System.out.print("Inserisci il numero di navi: ");
+            scanner.next();
+        }
         int numeroNavi = scanner.nextInt();
         if (scanner.hasNextLine())
             scanner.nextLine();
         while (numeroNavi < 1 || numeroNavi > dimensioneGriglia) {
             System.out.println("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
             System.out.print("Inserisci il numero di navi: ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Il numero di navi deve essere un numero intero");
+                System.out.print("Inserisci il numero di navi: ");
+                scanner.next();
+            }
             numeroNavi = scanner.nextInt();
             if (scanner.hasNextLine())
                 scanner.nextLine();

@@ -53,6 +53,7 @@ public class Griglia {
                 c = input.charAt(0);
                 num = Integer.parseInt(input.substring(1));
                 posizione = new Posizione(c, num);
+                if (nave.getDimensione() == 1) break;
                 boolean direzioneValida = false;
                 while (!direzioneValida) {
                     try {
