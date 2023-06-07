@@ -14,6 +14,7 @@ public class Griglia {
     private final int dimensione;
     private Posizione[][] griglia;
     private Nave[] navi;
+    private int punteggio = 0;
 
     public Griglia(int dimensione, Nave[] navi) throws IllegalArgumentException {
         if (dimensione < MIN_DIMENSIONE || dimensione > MAX_DIMENSIONE)
@@ -32,6 +33,10 @@ public class Griglia {
 
     public Posizione[][] getGriglia() {
         return griglia;
+    }
+
+    public int getPunteggio() {
+        return punteggio;
     }
 
     public void posizionaNavi(Nave[] navi, Scanner scanner) {
@@ -143,9 +148,11 @@ public class Griglia {
             case NAVE:
                 griglia[riga][colonna].setNomeNave(null);
                 griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                punteggio += 5;
                 break;
             case ACQUA:
                 griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                punteggio -= 2;
                 break;
             default:
                 break;
@@ -163,9 +170,11 @@ public class Griglia {
             case NAVE:
                 griglia[riga][colonna].setNomeNave(null);
                 griglia[riga][colonna].setOccupazione(Posizione.Occupazione.COLPITA);
+                punteggio += 5;
                 break;
             case ACQUA:
                 griglia[riga][colonna].setOccupazione(Posizione.Occupazione.MANCATA);
+                punteggio -= 2;
                 break;
             default:
                 break;
