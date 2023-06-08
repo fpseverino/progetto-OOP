@@ -98,14 +98,10 @@ public class Partita {
             try {
                 System.out.print("Inserisci la posizione da colpire: ");
                 String input = scanner.nextLine();
-                if (input.equals("exit"))
-                    break;
                 while (!Posizione.isPosizione(input)) {
                     System.out.println("La posizione non è valida");
                     System.out.print("Inserisci la posizione da colpire: ");
                     input = scanner.nextLine();
-                    if (input.equals("exit"))
-                        break;
                 }
                 char c = input.charAt(0);
                 int num = Integer.parseInt(input.substring(1));
