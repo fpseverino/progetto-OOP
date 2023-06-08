@@ -11,7 +11,9 @@ import java.io.*;
 public class Main {
     static public void main(String[] args) {
         printTitolo();
-        Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
+    boolean esci = false;
+    while (!esci) {
         switch (menu(scanner)) {
             case 1:
                 Partita nuovaPartita = initPartita(scanner);
@@ -20,15 +22,18 @@ public class Main {
                 break;
             case 2:
                 Partita partitaCaricata = caricaPartita(scanner);
-                partitaCaricata.gioca(scanner);
+                if (partitaCaricata != null) {
+                    partitaCaricata.gioca(scanner);
+                }
                 break;
             case 3:
-                System.out.println("Ciao!");
+            System.out.println("Uscita");
+                esci = true;
                 break;
         }
-        scanner.close();
-        System.out.println("Grazie per aver giocato!");
     }
+    scanner.close();
+}
 
     public static Partita initPartita(Scanner scanner) {
         System.out.print("Inserisci la dimensione della griglia: ");
@@ -84,12 +89,18 @@ public class Main {
     }
 
     public static Partita caricaPartita(Scanner scanner) {
-        System.out.print("Inserisci il nome del file di salvataggio: ");
+        System.out.print("Inserisci il nome del file di salvataggio (digita 'exit' per tornare indietro): ");
         String nomeFile = scanner.nextLine();
+        if (nomeFile.equalsIgnoreCase("exit")) {
+            return null; 
+        }
         while (!nomeFile.endsWith(".dat")) {
             System.out.println("Il nome del file deve terminare con .dat");
-            System.out.print("Inserisci il nome del file di salvataggio: ");
+            System.out.print("Inserisci il nome del file di salvataggio (digita 'exit' per tornare indietro): ");
             nomeFile = scanner.nextLine(); 
+            if (nomeFile.equalsIgnoreCase("exit")) {
+                return null; 
+            }
         }
         try {
             FileInputStream fileInputStream = new FileInputStream(nomeFile);
@@ -108,6 +119,7 @@ public class Main {
         }
         return null;
     }
+    
 
     public static void printTitolo(){
         System.out.println("" +
@@ -122,6 +134,7 @@ public class Main {
     }
 
     public static int menu(Scanner scanner) {
+        System.out.println("*** MENU ***");
         System.out.println("1. Nuova partita");
         System.out.println("2. Carica partita");
         System.out.println("3. Esci");
