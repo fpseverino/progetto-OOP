@@ -5,7 +5,7 @@
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 31/05/23.
 //
 
-public class Posizione {
+public class Posizione implements java.io.Serializable {
     private final int colonna;
     private final int riga;
     private String nomeNave;

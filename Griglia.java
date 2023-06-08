@@ -7,7 +7,7 @@
 
 import java.util.Scanner;
 
-public class Griglia {
+public class Griglia implements java.io.Serializable {
     public static final int MIN_DIMENSIONE = 3;
     public static final int MAX_DIMENSIONE = 26;
 

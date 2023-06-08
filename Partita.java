@@ -6,8 +6,9 @@
 //
 
 import java.util.Scanner;
+import java.io.*;
 
-public class Partita {
+public class Partita implements Serializable {
     private final int dimensioneGriglia;
     private final int numeroNavi;
     private Nave[] navi;
@@ -17,8 +18,9 @@ public class Partita {
     private Griglia grigliaNaviComputer;
     private Griglia grigliaColpiGiocatore;
     private int numeroTurni = 0;
+    private final String nomeFile;
 
-    public Partita(int dimensioneGriglia, int numeroNavi, Scanner scanner) throws IllegalArgumentException {
+    public Partita(int dimensioneGriglia, int numeroNavi, String nomeFile, Scanner scanner) throws IllegalArgumentException {
         if (numeroNavi < 1 || numeroNavi > dimensioneGriglia)
             throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
         this.dimensioneGriglia = dimensioneGriglia;
@@ -34,6 +36,7 @@ public class Partita {
         this.grigliaNaviGiocatore = new Griglia(dimensioneGriglia, naviGiocatore);
         this.grigliaNaviComputer = new Griglia(dimensioneGriglia, naviComputer);
         this.grigliaColpiGiocatore = new Griglia(dimensioneGriglia, null);
+        this.nomeFile = nomeFile;
     }
 
     public Nave[] getNavi() {
@@ -85,23 +88,27 @@ public class Partita {
     public void posizionaNavi(Scanner scanner) {
         grigliaNaviGiocatore.posizionaNavi(navi, scanner);
         grigliaNaviComputer.posizionaNavi(navi);
+    }
+
+    public boolean turno(Scanner scanner) {
         printGriglie();
         grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
         grigliaNaviComputer.printRecapNavi("Navi computer:");
-    }
-
-    public void turno(Scanner scanner) {
         System.out.println("Turno " + ++numeroTurni);
         Posizione posizione = null;
         boolean colpoValido = false;
         while (!colpoValido) {
             try {
-                System.out.print("Inserisci la posizione da colpire: ");
+                System.out.print("Inserisci la posizione da colpire ('exit' per uscire): ");
                 String input = scanner.nextLine();
+                if (input.equals("exit"))
+                    return false;
                 while (!Posizione.isPosizione(input)) {
                     System.out.println("La posizione non è valida");
-                    System.out.print("Inserisci la posizione da colpire: ");
+                    System.out.print("Inserisci la posizione da colpire ('exit' per uscire): ");
                     input = scanner.nextLine();
+                    if (input.equals("exit"))
+                        return false;
                 }
                 char c = input.charAt(0);
                 int num = Integer.parseInt(input.substring(1));
@@ -114,14 +121,15 @@ public class Partita {
         grigliaNaviGiocatore.sparaColpo();
         grigliaNaviGiocatore.checkAffondate();
         grigliaNaviComputer.checkAffondate();
-        printGriglie();
-        grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
-        grigliaNaviComputer.printRecapNavi("Navi computer:");
+        return true;
     }
 
     public void gioca(Scanner scanner) {
-        while (!grigliaNaviGiocatore.naviTutteAffondate() && !grigliaNaviComputer.naviTutteAffondate())
-            turno(scanner);
+        while (!grigliaNaviGiocatore.naviTutteAffondate() && !grigliaNaviComputer.naviTutteAffondate()) {
+            if (!turno(scanner))
+                return;
+            salvaPartita();
+        }
         if (grigliaNaviGiocatore.naviTutteAffondate()) {
             System.out.println("Hai perso!");
             System.out.println("Numero turni: " + numeroTurni);
@@ -133,6 +141,16 @@ public class Partita {
             System.out.println("Il tuo punteggio: " + grigliaNaviComputer.getPunteggio());
             System.out.println("Punteggio computer: " + grigliaNaviGiocatore.getPunteggio());
         }
+    }
+
+    public void salvaPartita() {
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(nomeFile);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public void printGriglie() {
