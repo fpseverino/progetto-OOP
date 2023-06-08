@@ -5,7 +5,7 @@
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 31/05/23.
 //
 
-public class Nave {
+public class Nave implements java.io.Serializable {
     private final String nome;
     private final int dimensione;
     private boolean affondata = false;
