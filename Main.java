@@ -18,15 +18,32 @@ public class Main {
                 case 1:
                     Partita nuovaPartita = initPartita(scanner);
                     nuovaPartita.posizionaNavi(scanner);
-                    nuovaPartita.gioca(scanner);
+                    try {
+                        nuovaPartita.gioca(scanner);
+                    } catch (PosizioneNonValidaException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
-                    Partita partitaCaricata = caricaPartita(scanner);
+                    Partita partitaCaricata = null;
+                    try {
+                        partitaCaricata = caricaPartita(scanner);
+                    } catch (FileNotFoundException e) {
+                        System.out.println("File non trovato");
+                    } catch (IOException e) {
+                        System.out.println("Errore di I/O");
+                    } catch (ClassNotFoundException e) {
+                        System.out.println("Classe non trovata");
+                    }
                     if (partitaCaricata != null)
-                        partitaCaricata.gioca(scanner);
+                        try {
+                            partitaCaricata.gioca(scanner);
+                        } catch (PosizioneNonValidaException e) {
+                            System.out.println(e.getMessage());
+                        }
                     break;
                 case 3:
-                    System.out.println("Uscita");
+                    System.out.println("\nUscita\n");
                     esci = true;
                     break;
             }
@@ -84,10 +101,21 @@ public class Main {
             System.out.print("Inserisci il nome del file di salvataggio: ");
             nomeFile = scanner.nextLine(); 
         }
-        return new Partita(dimensioneGriglia, numeroNavi, nomeFile, scanner);
+        try {
+            return new Partita(dimensioneGriglia, numeroNavi, nomeFile, scanner);
+        } catch (NaveNonValidaException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } catch (PosizioneNonValidaException e) {
+            System.out.println(e.getMessage());
+            return null;
+        } catch (GrigliaNonValidaException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
-    public static Partita caricaPartita(Scanner scanner) {
+    public static Partita caricaPartita(Scanner scanner) throws ClassCastException, ClassNotFoundException, IOException {
         System.out.print("Inserisci il nome del file di salvataggio (digita 'exit' per tornare indietro): ");
         String nomeFile = scanner.nextLine();
         if (nomeFile.equalsIgnoreCase("exit"))
@@ -126,12 +154,12 @@ public class Main {
                 "██████╦╝███████║░░░██║░░░░░░██║░░░██║░░░░░█████╗░░╚█████╗░███████║██║██████╔╝\n" +
                 "██╔══██╗██╔══██║░░░██║░░░░░░██║░░░██║░░░░░██╔══╝░░░╚═══██╗██╔══██║██║██╔═══╝░\n" +
                 "██████╦╝██║░░██║░░░██║░░░░░░██║░░░███████╗███████╗██████╔╝██║░░██║██║██║░░░░░\n" +
-                "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░\n" +
+                "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░" +
                 Display.ANSI_RESET);
     }
 
     public static int menu(Scanner scanner) {
-        System.out.println("*** MENU ***");
+        System.out.println("\n*** MENU ***");
         System.out.println("1. Nuova partita");
         System.out.println("2. Carica partita");
         System.out.println("3. Esci");

@@ -10,11 +10,11 @@ public class Nave implements java.io.Serializable {
     private final int dimensione;
     private boolean affondata = false;
 
-    public Nave(String nome, int dimensione) throws IllegalArgumentException {
+    public Nave(String nome, int dimensione) throws NaveNonValidaException {
         if (nome == null || nome.isBlank())
-            throw new IllegalArgumentException("Il nome della nave non può essere nullo o vuoto");
+            throw new NaveNonValidaException("Il nome della nave non può essere nullo o vuoto");
         if (dimensione < 1)
-            throw new IllegalArgumentException("La dimensione della nave deve essere maggiore di 0");
+            throw new NaveNonValidaException("La dimensione della nave deve essere maggiore di 0");
         this.nome = nome;
         this.dimensione = dimensione;
     }
@@ -33,5 +33,13 @@ public class Nave implements java.io.Serializable {
 
     public void affonda() {
         this.affondata = true;
+    }
+}
+
+class NaveNonValidaException extends Exception {
+    public NaveNonValidaException() {}
+
+    public NaveNonValidaException(String message) {
+        super(message);
     }
 }
