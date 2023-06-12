@@ -29,16 +29,16 @@ public class Posizione implements java.io.Serializable {
 
     private Occupazione occupazione;
 
-    public Posizione(int colonna, int riga) throws IllegalArgumentException {
+    public Posizione(int colonna, int riga) throws PosizioneNonValidaException {
         if (colonna < 0 || riga < 0)
-            throw new IllegalArgumentException("La colonna e la riga devono essere maggiori o uguali a 0");
+            throw new PosizioneNonValidaException("La colonna e la riga devono essere maggiori o uguali a 0");
         this.colonna = colonna;
         this.riga = riga;
         this.occupazione = Occupazione.ACQUA;
         this.nomeNave = null;
     }
 
-    public Posizione(char colonna, int riga) throws IllegalArgumentException {
+    public Posizione(char colonna, int riga) throws PosizioneNonValidaException {
         this(Character.isLetter(colonna) ? Character.toUpperCase(colonna) - 'A' : -1, riga - 1);
     }
 
@@ -68,5 +68,13 @@ public class Posizione implements java.io.Serializable {
 
     public static boolean isPosizione(String posizione) {
         return posizione.matches("^[A-Za-z][1-9]([0-9])?$");
+    }
+}
+
+class PosizioneNonValidaException extends Exception {
+    public PosizioneNonValidaException() {}
+
+    public PosizioneNonValidaException(String message) {
+        super(message);
     }
 }

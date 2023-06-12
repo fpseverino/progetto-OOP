@@ -16,9 +16,9 @@ public class Griglia implements java.io.Serializable {
     private Nave[] navi;
     private int punteggio = 0;
 
-    public Griglia(int dimensione, Nave[] navi) throws IllegalArgumentException {
+    public Griglia(int dimensione, Nave[] navi) throws PosizioneNonValidaException, GrigliaNonValidaException {
         if (dimensione < MIN_DIMENSIONE || dimensione > MAX_DIMENSIONE)
-            throw new IllegalArgumentException("La dimensione della griglia deve essere compresa tra " + MIN_DIMENSIONE + " e " + MAX_DIMENSIONE);
+            throw new GrigliaNonValidaException("La dimensione della griglia deve essere compresa tra " + MIN_DIMENSIONE + " e " + MAX_DIMENSIONE);
         this.dimensione = dimensione;
         griglia = new Posizione[dimensione][dimensione];
         for (int i = 0; i < dimensione; i++)
@@ -57,7 +57,9 @@ public class Griglia implements java.io.Serializable {
                 }
                 c = input.charAt(0);
                 num = Integer.parseInt(input.substring(1));
-                posizione = new Posizione(c, num);
+                try {
+                    posizione = new Posizione(c, num);
+                } catch (PosizioneNonValidaException e) { System.out.println(e.getMessage()); }
                 if (nave.getDimensione() == 1) break;
                 boolean direzioneValida = false;
                 while (!direzioneValida) {
@@ -65,7 +67,7 @@ public class Griglia implements java.io.Serializable {
                         System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
                         direzione = Direzione.fromString(scanner.nextLine());
                         direzioneValida = true;
-                    } catch (IllegalArgumentException e) { System.out.println("La direzione non è valida"); }
+                    } catch (DirezioneNonValidaException e) { System.out.println(e.getMessage());; }
                 }
                 if (!isPosizioneValida(nave, posizione, direzione)) System.out.println("La posizione non è valida");
             }
@@ -76,13 +78,15 @@ public class Griglia implements java.io.Serializable {
 
     public void posizionaNavi(Nave[] navi) {
         for (Nave nave : navi) {
-            Posizione posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
-            Direzione direzione = Direzione.values()[(int) (Math.random() * 2)];
-            while (!isPosizioneValida(nave, posizione, direzione)) {
-                posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
-                direzione = Direzione.values()[(int) (Math.random() * 2)];
-            }
-            posizionaNave(nave, posizione, direzione);
+            try {
+                Posizione posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
+                Direzione direzione = Direzione.values()[(int) (Math.random() * 2)];
+                while (!isPosizioneValida(nave, posizione, direzione)) {
+                    posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
+                    direzione = Direzione.values()[(int) (Math.random() * 2)];
+                }
+                posizionaNave(nave, posizione, direzione);
+            } catch (PosizioneNonValidaException e) { System.out.println(e.getMessage()); }
         }
     }
 
@@ -137,9 +141,9 @@ public class Griglia implements java.io.Serializable {
         return griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.ACQUA || griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.NAVE;
     }
 
-    public void sparaColpo(Posizione posizione) throws IllegalArgumentException {
+    public void sparaColpo(Posizione posizione) throws PosizioneNonValidaException {
         if (!isPosizioneValida(posizione))
-            throw new IllegalArgumentException("Posizione non valida");
+            throw new PosizioneNonValidaException("Posizione non valida");
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
         if (colonna < 0 || colonna >= dimensione || riga < 0 || riga >= dimensione)
@@ -159,7 +163,7 @@ public class Griglia implements java.io.Serializable {
         }
     }
 
-    public void sparaColpo() {
+    public void sparaColpo() throws PosizioneNonValidaException {
         int colonna = (int) (Math.random() * dimensione);
         int riga = (int) (Math.random() * dimensione);
         if (!isPosizioneValida(new Posizione(riga, colonna))) {
@@ -258,5 +262,11 @@ public class Griglia implements java.io.Serializable {
             System.out.println();
         }
         System.out.println();
+    }
+}
+
+class GrigliaNonValidaException extends Exception {
+    public GrigliaNonValidaException(String message) {
+        super(message);
     }
 }

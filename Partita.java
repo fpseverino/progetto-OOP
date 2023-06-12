@@ -20,7 +20,7 @@ public class Partita implements Serializable {
     private int numeroTurni = 0;
     private final String nomeFile;
 
-    public Partita(int dimensioneGriglia, int numeroNavi, String nomeFile, Scanner scanner) throws IllegalArgumentException {
+    public Partita(int dimensioneGriglia, int numeroNavi, String nomeFile, Scanner scanner) throws NaveNonValidaException, PosizioneNonValidaException, GrigliaNonValidaException {
         if (numeroNavi < 1 || numeroNavi > dimensioneGriglia)
             throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
         this.dimensioneGriglia = dimensioneGriglia;
@@ -55,7 +55,7 @@ public class Partita implements Serializable {
         return grigliaColpiGiocatore;
     }
 
-    public void initNavi(Scanner scanner) {
+    public void initNavi(Scanner scanner) throws NaveNonValidaException {
         for (int i = 0; i < numeroNavi; i++) {
             System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
             String nome;
@@ -90,7 +90,7 @@ public class Partita implements Serializable {
         grigliaNaviComputer.posizionaNavi(navi);
     }
 
-    public boolean turno(Scanner scanner) {
+    public boolean turno(Scanner scanner) throws PosizioneNonValidaException {
         printGriglie();
         grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
         grigliaNaviComputer.printRecapNavi("Navi computer:");
@@ -124,7 +124,7 @@ public class Partita implements Serializable {
         return true;
     }
 
-    public void gioca(Scanner scanner) {
+    public void gioca(Scanner scanner) throws PosizioneNonValidaException {
         while (!grigliaNaviGiocatore.naviTutteAffondate() && !grigliaNaviComputer.naviTutteAffondate()) {
             if (!turno(scanner))
                 return;
