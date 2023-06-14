@@ -117,10 +117,10 @@ public class Griglia implements java.io.Serializable {
         int dimensioneNave = nave.getDimensione();
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
-        if (dimensioneNave == 1)
-            return griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.ACQUA;
         if (colonna < 0 || colonna >= this.dimensione || riga < 0 || riga >= this.dimensione)
             return false;
+        if (dimensioneNave == 1)
+            return griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.ACQUA;
         if (direzione == Direzione.VERTICALE) {
             if (riga + dimensioneNave > this.dimensione)
                 return false;
