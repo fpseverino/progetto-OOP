@@ -115,7 +115,7 @@ public class Partita implements Serializable {
                 posizione = new Posizione(c, num);
                 grigliaNaviComputer.sparaColpo(posizione);
                 colpoValido = true;
-            } catch (IllegalArgumentException e) { System.out.println(e.getMessage()); }
+            } catch (PosizioneNonValidaException e) { System.out.println(e.getMessage()); }
         }
         grigliaColpiGiocatore.checkColpo(posizione, grigliaNaviComputer);
         grigliaNaviGiocatore.sparaColpo();
