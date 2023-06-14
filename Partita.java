@@ -11,12 +11,12 @@ import java.io.*;
 public class Partita implements Serializable {
     private final int dimensioneGriglia;
     private final int numeroNavi;
-    private Nave[] navi;
+    private Nave[] navi; // Blueprint delle navi create dall'utente
     private Nave[] naviGiocatore;
     private Nave[] naviComputer;
     private Griglia grigliaNaviGiocatore;
     private Griglia grigliaNaviComputer;
-    private Griglia grigliaColpiGiocatore;
+    private Griglia grigliaColpiGiocatore; // Griglia che tiene traccia dei colpi sparati dall'utente
     private int numeroTurni = 0;
     private final String nomeFile;
 
@@ -28,6 +28,7 @@ public class Partita implements Serializable {
         this.navi = new Nave[numeroNavi];
         initNavi(scanner);
         this.naviGiocatore = new Nave[numeroNavi];
+        // Copia delle navi create dall'utente, per tenere traccia delle navi colpite
         for (int i = 0; i < numeroNavi; i++)
             naviGiocatore[i] = new Nave(navi[i].getNome(), navi[i].getDimensione());
         this.naviComputer = new Nave[numeroNavi];
@@ -56,6 +57,7 @@ public class Partita implements Serializable {
     }
 
     public void initNavi(Scanner scanner) throws NaveNonValidaException {
+        // Scelta del nome e della dimensione delle navi
         for (int i = 0; i < numeroNavi; i++) {
             System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
             String nome;

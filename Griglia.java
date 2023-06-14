@@ -40,6 +40,7 @@ public class Griglia implements java.io.Serializable {
     }
 
     public void posizionaNavi(Nave[] navi, Scanner scanner) {
+        // Posizionamento delle navi dell'utente
         for (Nave nave : navi) {
             print();
             String input;
@@ -61,7 +62,7 @@ public class Griglia implements java.io.Serializable {
                     posizione = new Posizione(c, num);
                 } catch (PosizioneNonValidaException e) { System.out.println(e.getMessage()); }
                 if (nave.getDimensione() == 1) {
-                    direzione = Direzione.VERTICALE;
+                    direzione = Direzione.VERTICALE; // La direzione non è importante per le navi di dimensione 1
                 } else {
                     boolean direzioneValida = false;
                     while (!direzioneValida) {
@@ -80,6 +81,7 @@ public class Griglia implements java.io.Serializable {
     }
 
     public void posizionaNavi(Nave[] navi) {
+        // Posizionamento delle navi del computer
         for (Nave nave : navi) {
             try {
                 Posizione posizione = new Posizione((int) (Math.random() * dimensione), (int) (Math.random() * dimensione));
@@ -147,6 +149,7 @@ public class Griglia implements java.io.Serializable {
     }
 
     public void sparaColpo(Posizione posizione) throws PosizioneNonValidaException {
+        // Spara un colpo alla posizione specificata dall'utente
         if (!isPosizioneValida(posizione))
             throw new PosizioneNonValidaException("Posizione non valida");
         int colonna = posizione.getColonna();
@@ -169,6 +172,7 @@ public class Griglia implements java.io.Serializable {
     }
 
     public void sparaColpo() throws PosizioneNonValidaException {
+        // Spara un colpo in una posizione casuale (usato dal computer)
         int colonna = (int) (Math.random() * dimensione);
         int riga = (int) (Math.random() * dimensione);
         if (!isPosizioneValida(new Posizione(riga, colonna))) {
@@ -191,6 +195,7 @@ public class Griglia implements java.io.Serializable {
     }
 
     public void checkColpo(Posizione posizione, Griglia grigliaComputer) {
+        // Copia il colpo sparato sulla griglia colpi dell'utente nella griglia del computer
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
         switch (grigliaComputer.getGriglia()[riga][colonna].getOccupazione()) {
@@ -210,6 +215,7 @@ public class Griglia implements java.io.Serializable {
     }
 
     public void checkAffondate() {
+        // Setta le navi affondate
         for (Nave nave : navi) {
             if (!nave.isAffondata()) {
                 boolean trovata = false;
