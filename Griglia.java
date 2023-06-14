@@ -60,14 +60,17 @@ public class Griglia implements java.io.Serializable {
                 try {
                     posizione = new Posizione(c, num);
                 } catch (PosizioneNonValidaException e) { System.out.println(e.getMessage()); }
-                if (nave.getDimensione() == 1) break;
-                boolean direzioneValida = false;
-                while (!direzioneValida) {
-                    try {
-                        System.out.print("Inserisci la direzione della nave (Verticale/Orizzontale): ");
-                        direzione = Direzione.fromString(scanner.nextLine());
-                        direzioneValida = true;
-                    } catch (DirezioneNonValidaException e) { System.out.println(e.getMessage());; }
+                if (nave.getDimensione() == 1) {
+                    direzione = Direzione.VERTICALE;
+                } else {
+                    boolean direzioneValida = false;
+                    while (!direzioneValida) {
+                        try {
+                            System.out.print("Inserisci la direzione della nave " + nave.getNome() + " (Verticale/Orizzontale): ");
+                            direzione = Direzione.fromString(scanner.nextLine());
+                            direzioneValida = true;
+                        } catch (DirezioneNonValidaException e) { System.out.println(e.getMessage());; }
+                    }
                 }
                 if (!isPosizioneValida(nave, posizione, direzione)) System.out.println("La posizione non è valida");
             }
@@ -114,6 +117,8 @@ public class Griglia implements java.io.Serializable {
         int dimensioneNave = nave.getDimensione();
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
+        if (dimensioneNave == 1)
+            return griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.ACQUA;
         if (colonna < 0 || colonna >= this.dimensione || riga < 0 || riga >= this.dimensione)
             return false;
         if (direzione == Direzione.VERTICALE) {
