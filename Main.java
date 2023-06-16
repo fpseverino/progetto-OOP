@@ -8,7 +8,17 @@
 import java.util.Scanner;
 import java.io.*;
 
+/**
+ * Classe principale del programma.
+ * Gestisce l'avvio del gioco e le operazioni di inizializzazione delle partite.
+ */
 public class Main {
+    /**
+     * Punto di ingresso principale del programma.
+     * Avvia il gioco e gestisce il menu principale.
+     * 
+     * @param args Gli argomenti passati al programma.
+     */
     static public void main(String[] args) {
         printTitolo();
         Scanner scanner = new Scanner(System.in);
@@ -51,6 +61,13 @@ public class Main {
         scanner.close();
     }
 
+    /**
+     * Inizializza una nuova partita.
+     * Chiede all'utente la dimensione della griglia, il numero di navi e il nome del file di salvataggio, quindi crea una nuova partita.
+     * 
+     * @param scanner L'oggetto Scanner per leggere l'input dell'utente.
+     * @return La partita inizializzata, o null se si verificano errori durante l'inizializzazione.
+     */
     public static Partita initPartita(Scanner scanner) {
         System.out.print("Inserisci la dimensione della griglia: ");
         while (!scanner.hasNextInt()) {
@@ -115,6 +132,16 @@ public class Main {
         }
     }
 
+    /**
+     * Carica una partita esistente da un file di salvataggio.
+     * Chiede all'utente il nome del file di salvataggio e tenta di caricare la partita corrispondente.
+     * 
+     * @param scanner L'oggetto Scanner per leggere l'input dell'utente.
+     * @return La partita caricata, o null se si verificano errori durante il caricamento.
+     * @throws ClassCastException Se il file di salvataggio non contiene una partita valida.
+     * @throws ClassNotFoundException Se la classe della partita non viene trovata durante il caricamento.
+     * @throws IOException Se si verifica un errore di I/O durante la lettura del file di salvataggio.
+     */
     public static Partita caricaPartita(Scanner scanner) throws ClassCastException, ClassNotFoundException, IOException {
         System.out.print("Inserisci il nome del file di salvataggio (digita 'exit' per tornare indietro): ");
         String nomeFile = scanner.nextLine();
@@ -145,7 +172,9 @@ public class Main {
         return null;
     }
     
-
+    /**
+     * Stampa il titolo del gioco sulla console.
+     */
     public static void printTitolo(){
         System.out.println("" +
                 "\n" + Display.ANSI_CYAN +
@@ -157,7 +186,13 @@ public class Main {
                 "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░" +
                 Display.ANSI_RESET);
     }
-
+    
+    /**
+     * Visualizza il menu principale e legge la scelta dell'utente.
+     * 
+     * @param scanner L'oggetto Scanner per leggere l'input dell'utente.
+     * @return La scelta dell'utente.
+     */
     public static int menu(Scanner scanner) {
         System.out.println("\n*** MENU ***");
         System.out.println("1. Nuova partita");

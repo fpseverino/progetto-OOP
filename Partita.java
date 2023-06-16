@@ -20,6 +20,17 @@ public class Partita implements Serializable {
     private int numeroTurni = 0;
     private final String nomeFile;
 
+    /**
+     * Crea una nuova istanza di Partita.
+     *
+     * @param dimensioneGriglia La dimensione della griglia di gioco.
+     * @param numeroNavi        Il numero di navi da posizionare.
+     * @param nomeFile          Il nome del file per il salvataggio della partita.
+     * @param scanner           L'istanza di Scanner per l'input da tastiera.
+     * @throws NaveNonValidaException     se una nave creata dall'utente non è valida.
+     * @throws PosizioneNonValidaException se viene inserita una posizione non valida.
+     * @throws GrigliaNonValidaException  se viene creata una griglia non valida.
+     */
     public Partita(int dimensioneGriglia, int numeroNavi, String nomeFile, Scanner scanner) throws NaveNonValidaException, PosizioneNonValidaException, GrigliaNonValidaException {
         if (numeroNavi < 1 || numeroNavi > dimensioneGriglia)
             throw new IllegalArgumentException("Il numero di navi deve essere compreso tra 1 e la dimensione della griglia (" + dimensioneGriglia + ")");
@@ -40,22 +51,48 @@ public class Partita implements Serializable {
         this.nomeFile = nomeFile;
     }
 
+    /**
+     * Restituisce le navi create dall'utente.
+     *
+     * @return Le navi create dall'utente.
+     */
     public Nave[] getNavi() {
         return navi;
     }
 
+    /**
+     * Restituisce la griglia delle navi del giocatore.
+     *
+     * @return La griglia delle navi del giocatore.
+     */
     public Griglia getGrigliaNaviGiocatore() {
         return grigliaNaviGiocatore;
     }
 
+    /**
+     * Restituisce la griglia delle navi del computer.
+     *
+     * @return La griglia delle navi del computer.
+     */
     public Griglia getGrigliaNaviComputer() {
         return grigliaNaviComputer;
     }
 
+    /**
+     * Restituisce la griglia dei colpi sparati dal giocatore.
+     *
+     * @return La griglia dei colpi sparati dal giocatore.
+     */
     public Griglia getGrigliaColpiGiocatore() {
         return grigliaColpiGiocatore;
     }
 
+    /**
+     * Inizializza le navi su scelta dell'utente.
+     *
+     * @param scanner L'istanza di Scanner per l'input da tastiera.
+     * @throws NaveNonValidaException se una nave creata dall'utente non è valida.
+     */
     public void initNavi(Scanner scanner) throws NaveNonValidaException {
         // Scelta del nome e della dimensione delle navi
         for (int i = 0; i < numeroNavi; i++) {
@@ -80,6 +117,13 @@ public class Partita implements Serializable {
         }
     }
 
+    /**
+     * Verifica se il nome di una nave è già stato utilizzato.
+     *
+     * @param nome                Il nome della nave da verificare.
+     * @param numeroNaviInserite  Il numero di navi già inserite.
+     * @return true se il nome della nave è già stato utilizzato, false altrimenti.
+     */
     public boolean nomeNaveIsUsato(String nome, int numeroNaviInserite) {
         for (int j = 0; j < numeroNaviInserite; j++)
             if (navi[j].getNome().equals(nome))
@@ -87,11 +131,23 @@ public class Partita implements Serializable {
         return false;
     }
 
+    /**
+     * Posiziona le navi del giocatore e del computer sulla griglia.
+     *
+     * @param scanner L'istanza di Scanner per l'input da tastiera.
+     */
     public void posizionaNavi(Scanner scanner) {
         grigliaNaviGiocatore.posizionaNavi(navi, scanner);
         grigliaNaviComputer.posizionaNavi(navi);
     }
 
+    /**
+     * Esegue un turno di gioco.
+     *
+     * @param scanner L'istanza di Scanner per l'input da tastiera.
+     * @return true se il gioco continua, false se l'utente sceglie di uscire.
+     * @throws PosizioneNonValidaException se la posizione inserita non è valida.
+     */
     public boolean turno(Scanner scanner) throws PosizioneNonValidaException {
         printGriglie();
         grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
@@ -126,6 +182,12 @@ public class Partita implements Serializable {
         return true;
     }
 
+    /**
+     * Avvia il gioco.
+     *
+     * @param scanner L'istanza di Scanner per l'input da tastiera.
+     * @throws PosizioneNonValidaException se la posizione inserita non è valida.
+     */
     public void gioca(Scanner scanner) throws PosizioneNonValidaException {
         while (!grigliaNaviGiocatore.naviTutteAffondate() && !grigliaNaviComputer.naviTutteAffondate()) {
             if (!turno(scanner))
@@ -145,6 +207,9 @@ public class Partita implements Serializable {
         }
     }
 
+   /**
+     * Salva la partita su file.
+     */
     public void salvaPartita() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(nomeFile);
@@ -155,6 +220,9 @@ public class Partita implements Serializable {
         } catch (IOException e) { e.printStackTrace(); }
     }
 
+    /**
+     * Stampa le griglie di gioco, una di fianco all'altra.
+     */
     public void printGriglie() {
         System.out.println();
         System.out.print("   ");
