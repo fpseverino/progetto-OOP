@@ -4,6 +4,7 @@
 //
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 31/05/23.
 //
+
 /**
  * Rappresenta una nave nel gioco della battaglia navale.
  */
@@ -11,6 +12,7 @@ public class Nave implements java.io.Serializable {
     private final String nome;
     private final int dimensione;
     private boolean affondata = false;
+
     /**
      * Crea una nuova istanza di Nave.
      *
@@ -26,6 +28,7 @@ public class Nave implements java.io.Serializable {
         this.nome = nome;
         this.dimensione = dimensione;
     }
+
     /**
      * Restituisce il nome della nave.
      *
@@ -34,6 +37,7 @@ public class Nave implements java.io.Serializable {
     public String getNome() {
         return nome;
     }
+
     /**
      * Restituisce la dimensione della nave.
      *
@@ -42,6 +46,7 @@ public class Nave implements java.io.Serializable {
     public int getDimensione() {
         return dimensione;
     }
+
     /**
      * Verifica se la nave è affondata.
      *
@@ -50,6 +55,7 @@ public class Nave implements java.io.Serializable {
     public boolean isAffondata() {
         return affondata;
     }
+
     /**
      * Marca la nave come affondata.
      */
@@ -57,6 +63,7 @@ public class Nave implements java.io.Serializable {
         this.affondata = true;
     }
 }
+
 /**
  * Eccezione che viene lanciata quando viene creata una nave non valida.
  */

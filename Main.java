@@ -7,6 +7,7 @@
 
 import java.util.Scanner;
 import java.io.*;
+
 /**
  * Classe principale del programma.
  * Gestisce l'avvio del gioco e le operazioni di inizializzazione delle partite.
@@ -59,9 +60,10 @@ public class Main {
         }
         scanner.close();
     }
+
     /**
      * Inizializza una nuova partita.
-     * Chiede all'utente la dimensione della griglia e il numero di navi, quindi crea una nuova partita.
+     * Chiede all'utente la dimensione della griglia, il numero di navi e il nome del file di salvataggio, quindi crea una nuova partita.
      * 
      * @param scanner L'oggetto Scanner per leggere l'input dell'utente.
      * @return La partita inizializzata, o null se si verificano errori durante l'inizializzazione.
@@ -129,6 +131,7 @@ public class Main {
             return null;
         }
     }
+
     /**
      * Carica una partita esistente da un file di salvataggio.
      * Chiede all'utente il nome del file di salvataggio e tenta di caricare la partita corrispondente.
@@ -183,6 +186,7 @@ public class Main {
                 "╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░░░░╚═╝░░░╚══════╝╚══════╝╚═════╝░╚═╝░░╚═╝╚═╝╚═╝░░░░░" +
                 Display.ANSI_RESET);
     }
+    
     /**
      * Visualizza il menu principale e legge la scelta dell'utente.
      * 

@@ -5,6 +5,9 @@
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 03/06/23.
 //
 
+/**
+ * Classe di servizio che contiene i codici ANSI per la colorazione del testo.
+ */
 public final class Display {
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";

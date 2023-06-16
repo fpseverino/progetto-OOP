@@ -4,6 +4,7 @@
 //
 //  Created by Francesco Paolo Severino, Daniele Campisi and Roberto Giovanni Scolari on 02/06/23.
 //
+
 /**
  * Enumerazione che rappresenta le possibili direzioni per la posizione delle navi.
  */
@@ -11,10 +12,10 @@ public enum Direzione {
     ORIZZONTALE,
     VERTICALE;
     /**
-     * Converte una stringa nella corrispondente enumerazione di Direzione.
+     * Converte una stringa nel corrispondente valore di Direzione.
      *
      * @param direzione la stringa da convertire
-     * @return l'enumerazione di Direzione corrispondente alla stringa
+     * @return il valore di Direzione corrispondente alla stringa
      * @throws DirezioneNonValidaException se la stringa non corrisponde a una direzione valida
      */
     public static Direzione fromString(String direzione) throws DirezioneNonValidaException {
@@ -27,6 +28,7 @@ public enum Direzione {
         }
     }
 }
+
 /**
  * Eccezione che viene lanciata quando la direzione non è valida.
  */

@@ -6,6 +6,7 @@
 //
 
 import java.util.Scanner;
+
 /**
  * La classe Griglia rappresenta una griglia per il gioco delle navi. 
  * Fornisce metodi per posizionare le navi, sparare alle posizioni e controllare lo stato della griglia.
@@ -17,6 +18,7 @@ public class Griglia implements java.io.Serializable {
      * La dimensione minima consentita per la griglia.
      */
     public static final int MIN_DIMENSIONE = 3;
+
     /**
      * La dimensione massima consentita per la griglia.
      */
@@ -26,11 +28,12 @@ public class Griglia implements java.io.Serializable {
     private Posizione[][] griglia;
     private Nave[] navi;
     private int punteggio = 0;
+
     /**
      * Costruisce una griglia con la dimensione e le navi specificate.
      *
      * @param dimensione la dimensione della griglia
-     * @param navi       l'array di navi da posizionare sulla griglia
+     * @param navi       l'array di navi (scelte all'inizio della partita) da posizionare sulla griglia
      * @throws PosizioneNonValidaException se la dimensione della griglia non è valida
      * @throws GrigliaNonValidaException   se la griglia non è valida
      */
@@ -44,6 +47,7 @@ public class Griglia implements java.io.Serializable {
                 griglia[i][j] = new Posizione(i, j);
         this.navi = navi;
     }
+
     /**
      * Restituisce la dimensione della griglia.
      *
@@ -52,6 +56,7 @@ public class Griglia implements java.io.Serializable {
     public int getDimensione() {
         return dimensione;
     }
+
     /**
      * Restituisce l'array della griglia.
      *
@@ -60,6 +65,7 @@ public class Griglia implements java.io.Serializable {
     public Posizione[][] getGriglia() {
         return griglia;
     }
+
     /**
      * Restituisce il punteggio del giocatore.
      *
@@ -68,13 +74,13 @@ public class Griglia implements java.io.Serializable {
     public int getPunteggio() {
         return punteggio;
     }
+
     /**
      * Posiziona le navi sulla griglia in base all'input dell'utente.
      *
-     * @param navi    l'array di navi da posizionare sulla griglia
+     * @param navi    l'array di navi (scelte all'inizio della partita) da posizionare sulla griglia
      * @param scanner l'oggetto scanner utilizzato per l'input dell'utente
      */
-
     public void posizionaNavi(Nave[] navi, Scanner scanner) {
         for (Nave nave : navi) {
             print();
@@ -114,10 +120,11 @@ public class Griglia implements java.io.Serializable {
         }
         print();
     }
+
     /**
-     * Posiziona le navi sulla griglia in modo casuale.
+     * Posiziona le navi sulla griglia in modo casuale (metodo usato dal computer).
      *
-     * @param navi l'array di navi da posizionare sulla griglia
+     * @param navi l'array di navi (scelte all'inizio della partita) da posizionare sulla griglia
      */
     public void posizionaNavi(Nave[] navi) {
         for (Nave nave : navi) {
@@ -132,6 +139,7 @@ public class Griglia implements java.io.Serializable {
             } catch (PosizioneNonValidaException e) { System.out.println(e.getMessage()); }
         }
     }
+
     /**
      * Posiziona una nave sulla griglia.
      *
@@ -155,14 +163,15 @@ public class Griglia implements java.io.Serializable {
             }
         }
     }
-/**
- * Verifica se una determinata posizione è valida per posizionare una nave sulla griglia.
- *
- * @param nave       La nave da posizionare.
- * @param posizione  La posizione di partenza della nave.
- * @param direzione  La direzione della nave.
- * @return True se la posizione è valida, False altrimenti.
- */
+
+    /**
+     * Verifica se una determinata posizione è valida per posizionare una nave sulla griglia.
+     *
+     * @param nave       La nave da posizionare.
+     * @param posizione  La posizione di partenza della nave.
+     * @param direzione  La direzione della nave.
+     * @return True se la posizione è valida, False altrimenti.
+     */
     public boolean isPosizioneValida(Nave nave, Posizione posizione, Direzione direzione) {
         if (posizione == null || direzione == null)
             return false;
@@ -189,6 +198,12 @@ public class Griglia implements java.io.Serializable {
         return true;
     }
 
+    /**
+     * Verifica se una determinata posizione è valida per sparare o se si è già sparato in quella posizione.
+     *
+     * @param posizione La posizione da verificare.
+     * @return True se la posizione è valida, False altrimenti.
+     */
     public boolean isPosizioneValida(Posizione posizione) {
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
@@ -196,12 +211,12 @@ public class Griglia implements java.io.Serializable {
             return false;
         return griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.ACQUA || griglia[riga][colonna].getOccupazione() == Posizione.Occupazione.NAVE;
     }
-/**
- * Verifica se una determinata posizione è valida sulla griglia.
- *
- * @param posizione La posizione da verificare.
- * @return True se la posizione è valida, False altrimenti.
- */
+
+    /**
+     * Spara un colpo in una determinata posizione.
+     *
+     * @param posizione La posizione in cui sparare.
+     */
     public void sparaColpo(Posizione posizione) throws PosizioneNonValidaException {
         if (!isPosizioneValida(posizione))
             throw new PosizioneNonValidaException("Posizione non valida");
@@ -223,11 +238,12 @@ public class Griglia implements java.io.Serializable {
                 break;
         }
     }
-/**
- * Spara un colpo in una posizione casuale sulla griglia.
- *
- * @throws PosizioneNonValidaException se la posizione generata casualmente non è valida.
- */
+
+    /**
+     * Spara un colpo in una posizione casuale sulla griglia (metodo utilizzato dal computer).
+     *
+     * @throws PosizioneNonValidaException se la posizione generata casualmente non è valida.
+     */
     public void sparaColpo() throws PosizioneNonValidaException {
         int colonna = (int) (Math.random() * dimensione);
         int riga = (int) (Math.random() * dimensione);
@@ -249,12 +265,13 @@ public class Griglia implements java.io.Serializable {
                 break;
         }
     }
-/**
- * Controlla l'esito di un colpo sparato in una determinata posizione sulla griglia del computer avversario.
- *
- * @param posizione       La posizione in cui è stato sparato il colpo.
- * @param grigliaComputer La griglia del computer avversario.
- */
+
+    /**
+     * Copia il colpo sparato sulla griglia colpi dell'utente nella griglia del computer.
+     *
+     * @param posizione       La posizione in cui è stato sparato il colpo.
+     * @param grigliaComputer La griglia del computer avversario.
+     */
     public void checkColpo(Posizione posizione, Griglia grigliaComputer) {
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
@@ -273,9 +290,10 @@ public class Griglia implements java.io.Serializable {
                 break;
         }
     }
-/**
- * Controlla se ci sono navi affondate e le marca come affondate se nessuna posizione è più occupata dalla nave.
- */
+
+    /**
+     * Controlla se ci sono navi affondate e le marca come affondate se nessuna posizione è più occupata dalla nave.
+     */
     public void checkAffondate() {
         for (Nave nave : navi) {
             if (!nave.isAffondata()) {
@@ -289,31 +307,34 @@ public class Griglia implements java.io.Serializable {
             }
         }
     }
-/**
- * Verifica se tutte le navi sono affondate.
- *
- * @return true se tutte le navi sono affondate, false altrimenti.
- */
+
+    /**
+     * Verifica se tutte le navi sono affondate.
+     *
+     * @return true se tutte le navi sono affondate, false altrimenti.
+     */
     public boolean naviTutteAffondate() {
         for (Nave nave : navi)
             if (!nave.isAffondata())
                 return false;
         return true;
     }
-/**
- * Stampa un riepilogo delle navi sulla griglia.
- *
- * @param header L'intestazione del riepilogo.
- */
+
+    /**
+     * Stampa un riepilogo delle navi sulla griglia.
+     *
+     * @param header L'intestazione del riepilogo.
+     */
     public void printRecapNavi(String header) {
         System.out.println(header);
         for (Nave nave : navi)
             System.out.println(nave.getNome() + " (" + nave.getDimensione() + "): " + (nave.isAffondata() ? "Affondata" : "Integra"));
         System.out.println();
     }
-/**
- * Stampa la griglia con le posizioni delle navi e i colpi sparati.
- */
+
+    /**
+     * Stampa la griglia con le posizioni delle navi e i colpi sparati.
+     */
     public void print() {
         System.out.println();
         System.out.print("   ");
@@ -346,6 +367,7 @@ public class Griglia implements java.io.Serializable {
         System.out.println();
     }
 }
+
 /**
  * Eccezione che viene lanciata quando viene creata una griglia non valida.
  */
