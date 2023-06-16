@@ -9,7 +9,14 @@
  * Enumerazione che rappresenta le possibili direzioni per la posizione delle navi.
  */
 public enum Direzione {
+    /**
+     * Direzione orizzontale.
+     */
     ORIZZONTALE,
+
+    /**
+     * Direzione verticale.
+     */
     VERTICALE;
     /**
      * Converte una stringa nel corrispondente valore di Direzione.

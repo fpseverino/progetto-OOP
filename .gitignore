@@ -1,9 +1,3 @@
-# Unix Executable Files
-*
-!*.*
-!*/
-!Makefile
-
 # Compiled class file
 *.class
 

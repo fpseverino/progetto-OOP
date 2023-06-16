@@ -24,9 +24,25 @@ public class Griglia implements java.io.Serializable {
      */
     public static final int MAX_DIMENSIONE = 26;
 
+    /**
+     * La dimensione della griglia.
+     */
     private final int dimensione;
+
+    /**
+     * L'array bidimensionale di posizioni che rappresenta la griglia.
+     * Tiene traccia delle posizioni occupate dalle navi e di quelle vuote.
+     */
     private Posizione[][] griglia;
+
+    /**
+     * L'array di navi che rappresenta le navi posizionate sulla griglia.
+     */
     private Nave[] navi;
+
+    /**
+     * Il punteggio del giocatore che possiede la griglia.
+     */
     private int punteggio = 0;
 
     /**
@@ -216,6 +232,7 @@ public class Griglia implements java.io.Serializable {
      * Spara un colpo in una determinata posizione.
      *
      * @param posizione La posizione in cui sparare.
+     * @throws PosizioneNonValidaException se la posizione non è valida.
      */
     public void sparaColpo(Posizione posizione) throws PosizioneNonValidaException {
         if (!isPosizioneValida(posizione))

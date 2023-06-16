@@ -14,15 +14,56 @@ import java.io.*;
  * La partita può essere salvata su file e caricata da file.
  */
 public class Partita implements Serializable {
+    /**
+     * La dimensione della griglia di gioco.
+     */
     private final int dimensioneGriglia;
+
+    /**
+     * Il numero di navi da posizionare.
+     */
     private final int numeroNavi;
-    private Nave[] navi; // Blueprint delle navi create dall'utente
+
+    /**
+     * Blueprint delle navi create dall'utente
+     */
+    private Nave[] navi;
+
+    /**
+     * Navi dell'utente
+     * Tiene traccia dello stato delle navi
+     */
     private Nave[] naviGiocatore;
+
+    /**
+     * Navi del computer
+     * Tiene traccia dello stato delle navi
+     */
     private Nave[] naviComputer;
+
+    /**
+     * Griglia che tiene traccia delle navi posizionate dall'utente e dei colpi sparati dal computer
+     */
     private Griglia grigliaNaviGiocatore;
+
+    /**
+     * Griglia che tiene traccia delle navi posizionate dal computer e dei colpi sparati dall'utente
+     */
     private Griglia grigliaNaviComputer;
-    private Griglia grigliaColpiGiocatore; // Griglia che tiene traccia dei colpi sparati dall'utente
+
+    /**
+     * Griglia che tiene traccia dei colpi sparati dall'utente, tenendo nascoste le navi del computer
+     */
+    private Griglia grigliaColpiGiocatore;
+
+    /**
+     * Numero di turni giocati
+     */
     private int numeroTurni = 0;
+
+    /**
+     * Nome del file per il salvataggio della partita
+     */
     private final String nomeFile;
 
     /**
