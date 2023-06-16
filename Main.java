@@ -16,7 +16,7 @@ public class Main {
      * Punto di ingresso principale del programma.
      * Avvia il gioco e gestisce il menu principale.
      * 
-     * @param args Gli argomenti della riga di comando.
+     * @param args Gli argomenti passati al programma.
      */
     static public void main(String[] args) {
         printTitolo();
