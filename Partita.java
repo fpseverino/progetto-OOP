@@ -8,6 +8,11 @@
 import java.util.Scanner;
 import java.io.*;
 
+/**
+ * Rappresenta una partita di gioco.
+ * Le istanze di questa classe contengono tutte le informazioni necessarie per giocare una partita.
+ * La partita può essere salvata su file e caricata da file.
+ */
 public class Partita implements Serializable {
     private final int dimensioneGriglia;
     private final int numeroNavi;
