@@ -103,12 +103,22 @@ public class Partita implements Serializable {
                 System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
             }
             System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("La dimensione della nave deve essere un numero intero");
+                System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
+                scanner.next();
+            }
             int dimensione = scanner.nextInt();
             if (scanner.hasNextLine())
                 scanner.nextLine();
             while (dimensione > dimensioneGriglia || dimensione < 1) {
                 System.out.println("La dimensione della nave non può essere maggiore della dimensione della griglia (" + dimensioneGriglia + ") o minore di 1");
                 System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
+                while (!scanner.hasNextInt()) {
+                    System.out.println("La dimensione della nave deve essere un numero intero");
+                    System.out.print("Inserisci la dimensione della nave (" + nome + "): ");
+                    scanner.next();
+                }
                 dimensione = scanner.nextInt();
                 if (scanner.hasNextLine())
                     scanner.nextLine();

@@ -111,11 +111,11 @@ public class Main {
             if (scanner.hasNextLine())
                 scanner.nextLine();
         }
-        System.out.print("Inserisci il nome del file di salvataggio: ");
+        System.out.print("Inserisci il nome del file di salvataggio (formato .dat): ");
         String nomeFile = scanner.nextLine();
         while (!nomeFile.endsWith(".dat")) {
             System.out.println("Il nome del file deve terminare con .dat");
-            System.out.print("Inserisci il nome del file di salvataggio: ");
+            System.out.print("Inserisci il nome del file di salvataggio (formato .dat): ");
             nomeFile = scanner.nextLine(); 
         }
         try {
