@@ -18,6 +18,7 @@ public enum Direzione {
      * Direzione verticale.
      */
     VERTICALE;
+    
     /**
      * Converte una stringa nel corrispondente valore di Direzione.
      *
