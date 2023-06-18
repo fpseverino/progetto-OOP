@@ -57,48 +57,12 @@ public class Partita implements Serializable {
     }
 
     /**
-     * Restituisce le navi create dall'utente.
-     *
-     * @return Le navi create dall'utente.
-     */
-    public Nave[] getNavi() {
-        return navi;
-    }
-
-    /**
-     * Restituisce la griglia delle navi del giocatore.
-     *
-     * @return La griglia delle navi del giocatore.
-     */
-    public Griglia getGrigliaNaviGiocatore() {
-        return grigliaNaviGiocatore;
-    }
-
-    /**
-     * Restituisce la griglia delle navi del computer.
-     *
-     * @return La griglia delle navi del computer.
-     */
-    public Griglia getGrigliaNaviComputer() {
-        return grigliaNaviComputer;
-    }
-
-    /**
-     * Restituisce la griglia dei colpi sparati dal giocatore.
-     *
-     * @return La griglia dei colpi sparati dal giocatore.
-     */
-    public Griglia getGrigliaColpiGiocatore() {
-        return grigliaColpiGiocatore;
-    }
-
-    /**
      * Inizializza le navi su scelta dell'utente.
      *
      * @param scanner L'istanza di Scanner per l'input da tastiera.
      * @throws NaveNonValidaException se una nave creata dall'utente non è valida.
      */
-    public void initNavi(Scanner scanner) throws NaveNonValidaException {
+    private void initNavi(Scanner scanner) throws NaveNonValidaException {
         // Scelta del nome e della dimensione delle navi
         for (int i = 0; i < numeroNavi; i++) {
             System.out.print("Inserisci il nome della nave " + (i + 1) + ": ");
@@ -139,7 +103,7 @@ public class Partita implements Serializable {
      * @param numeroNaviInserite  Il numero di navi già inserite.
      * @return true se il nome della nave è già stato utilizzato, false altrimenti.
      */
-    public boolean nomeNaveIsUsato(String nome, int numeroNaviInserite) {
+    private boolean nomeNaveIsUsato(String nome, int numeroNaviInserite) {
         for (int j = 0; j < numeroNaviInserite; j++)
             if (navi[j].getNome().equals(nome))
                 return true;
@@ -163,7 +127,7 @@ public class Partita implements Serializable {
      * @return true se il gioco continua, false se l'utente sceglie di uscire.
      * @throws PosizioneNonValidaException se la posizione inserita non è valida.
      */
-    public boolean turno(Scanner scanner) throws PosizioneNonValidaException {
+    private boolean turno(Scanner scanner) throws PosizioneNonValidaException {
         printGriglie();
         grigliaNaviGiocatore.printRecapNavi("Navi giocatore:");
         grigliaNaviComputer.printRecapNavi("Navi computer:");
@@ -209,6 +173,7 @@ public class Partita implements Serializable {
                 return;
             salvaPartita();
         }
+        printGriglie();
         if (grigliaNaviGiocatore.naviTutteAffondate()) {
             System.out.println("Hai perso!");
             System.out.println("Numero turni: " + numeroTurni);
@@ -225,7 +190,7 @@ public class Partita implements Serializable {
    /**
      * Salva la partita su file.
      */
-    public void salvaPartita() {
+    private void salvaPartita() {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(nomeFile);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -238,7 +203,7 @@ public class Partita implements Serializable {
     /**
      * Stampa le griglie di gioco, una di fianco all'altra.
      */
-    public void printGriglie() {
+    private void printGriglie() {
         System.out.println();
         System.out.print("   ");
         for (int i = 0; i < grigliaNaviGiocatore.getDimensione(); i++)

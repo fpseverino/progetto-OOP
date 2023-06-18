@@ -147,7 +147,7 @@ public class Griglia implements java.io.Serializable {
      * @param posizione  la posizione iniziale della nave
      * @param direzione  la direzione della nave (verticale o orizzontale)
      */
-    public void posizionaNave(Nave nave, Posizione posizione, Direzione direzione) {
+    private void posizionaNave(Nave nave, Posizione posizione, Direzione direzione) {
         int dimensioneNave = nave.getDimensione();
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
@@ -172,7 +172,7 @@ public class Griglia implements java.io.Serializable {
      * @param direzione  La direzione della nave.
      * @return True se la posizione è valida, False altrimenti.
      */
-    public boolean isPosizioneValida(Nave nave, Posizione posizione, Direzione direzione) {
+    private boolean isPosizioneValida(Nave nave, Posizione posizione, Direzione direzione) {
         if (posizione == null || direzione == null)
             return false;
         int dimensioneNave = nave.getDimensione();
@@ -204,7 +204,7 @@ public class Griglia implements java.io.Serializable {
      * @param posizione La posizione da verificare.
      * @return True se la posizione è valida, False altrimenti.
      */
-    public boolean isPosizioneValida(Posizione posizione) {
+    private boolean isPosizioneValida(Posizione posizione) {
         int colonna = posizione.getColonna();
         int riga = posizione.getRiga();
         if (colonna < 0 || colonna >= dimensione || riga < 0 || riga >= dimensione)
@@ -336,7 +336,7 @@ public class Griglia implements java.io.Serializable {
     /**
      * Stampa la griglia con le posizioni delle navi e i colpi sparati.
      */
-    public void print() {
+    private void print() {
         System.out.println();
         System.out.print("   ");
         for (int i = 0; i < dimensione; i++)
