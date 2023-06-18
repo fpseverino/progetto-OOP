@@ -9,19 +9,8 @@
  * Rappresenta una nave nel gioco della battaglia navale.
  */
 public class Nave implements java.io.Serializable {
-    /**
-     * Il nome (tipo) della nave.
-     */
     private final String nome;
-
-    /**
-     * La dimensione della nave.
-     */
     private final int dimensione;
-
-    /**
-     * Valore booleano che indica se la nave è affondata.
-     */
     private boolean affondata = false;
 
     /**

@@ -14,7 +14,7 @@ import java.util.Scanner;
  * La classe tiene traccia anche del punteggio del giocatore.
  */
 public class Griglia implements java.io.Serializable {
-     /**
+    /**
      * La dimensione minima consentita per la griglia.
      */
     public static final int MIN_DIMENSIONE = 3;
@@ -24,25 +24,9 @@ public class Griglia implements java.io.Serializable {
      */
     public static final int MAX_DIMENSIONE = 26;
 
-    /**
-     * La dimensione della griglia.
-     */
     private final int dimensione;
-
-    /**
-     * L'array bidimensionale di posizioni che rappresenta la griglia.
-     * Tiene traccia delle posizioni occupate dalle navi e di quelle vuote.
-     */
     private Posizione[][] griglia;
-
-    /**
-     * L'array di navi che rappresenta le navi posizionate sulla griglia.
-     */
     private Nave[] navi;
-
-    /**
-     * Il punteggio del giocatore che possiede la griglia.
-     */
     private int punteggio = 0;
 
     /**

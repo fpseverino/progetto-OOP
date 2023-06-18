@@ -11,21 +11,9 @@
  * Ogni posizione può essere occupata da una nave o essere vuota (acqua).
  */
 public class Posizione implements java.io.Serializable {
-    /**
-     * La colonna della posizione.
-     */
     private final int colonna;
-
-    /**
-     * La riga della posizione.
-     */
     private final int riga;
-
-    /**
-     * Il nome della nave che occupa la posizione.
-     * Se la posizione è vuota, il nome è null.
-     */
-    private String nomeNave;
+    private String nomeNave; // Il nome della nave che occupa la posizione, se presente
 
     /**
      * Enumerazione che rappresenta le possibili occupazioni di una posizione.
@@ -51,9 +39,6 @@ public class Posizione implements java.io.Serializable {
          */
         COLPITA('0');
 
-        /**
-         * Il carattere di rappresentazione dell'occupazione.
-         */
         private final char label;
 
         /**
@@ -75,9 +60,6 @@ public class Posizione implements java.io.Serializable {
         }
     }
 
-    /**
-     * L'occupazione della posizione.
-     */
     private Occupazione occupazione;
 
     /**
